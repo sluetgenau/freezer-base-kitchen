@@ -199,10 +199,34 @@
 
   noscript .ns{background:var(--panel); border:1px solid var(--accent); border-radius:var(--r); padding:14px; margin:16px 0; color:var(--dim);}
 
+  /* ---------- SHOPPING LIST BAR ---------- */
+  .addall{cursor:pointer; font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--accent); background:transparent; border:1px solid var(--line-2); border-radius:var(--r-sm);
+    padding:7px 11px; min-height:34px; white-space:nowrap;}
+  .addall:active{background:var(--panel-2);}
+  #listbar{position:fixed; left:0; right:0; bottom:0; z-index:70; transform:translateY(130%);
+    transition:transform .25s ease; background:rgba(18,21,27,.97);
+    backdrop-filter:saturate(140%) blur(12px); -webkit-backdrop-filter:saturate(140%) blur(12px);
+    border-top:1px solid var(--line-2); padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  #listbar.show{transform:translateY(0);}
+  #listbar .lc{color:var(--dim); font-size:14px;} #listbar .lc b{color:var(--accent-hi); font-variant-numeric:tabular-nums;}
+  .lb-actions{display:flex; gap:8px;}
+  #listbar button{cursor:pointer; border-radius:var(--r-sm); font-size:14px; font-weight:700; min-height:44px;
+    padding:0 16px; border:1px solid var(--line-2); background:var(--panel); color:var(--dim); transition:opacity .12s;}
+  #listbar button.primary{background:var(--accent); color:#0c1116; border-color:var(--accent);}
+  #listbar button:active{opacity:.8;}
+  #listbar.show ~ #top{bottom:calc(82px + env(safe-area-inset-bottom));}
+  #toast{position:fixed; left:50%; bottom:92px; transform:translateX(-50%) translateY(16px); z-index:80;
+    background:var(--panel-2); border:1px solid var(--line-2); color:var(--text); padding:11px 17px;
+    border-radius:var(--r-sm); font-size:14px; max-width:88vw; text-align:center; box-shadow:0 12px 30px -10px rgba(0,0,0,.6);
+    opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;}
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
   /* ---------- PRINT ---------- */
   @media print{
     :root{--bg:#fff;--panel:#fff;--panel-2:#eef1f4;--bg-2:#fff;--text:#10141a;--dim:#33404c;--mute:#5c6772;--line:#d3d9df;--line-2:#c6ced6;--accent:#2c5167;--accent-hi:#223f51;}
-    body{background:#fff;} .filter,#top{display:none!important;}
+    body{background:#fff;} .filter,#top,#listbar,#toast,.addall{display:none!important;}
     .recipe.dim-out{display:flex!important;}
     .recipe,.base,.step,.mcat{break-inside:avoid;}
     section{padding:16px 0;} header.hero{padding:8px 0;}
@@ -273,7 +297,7 @@
 
   <section id="pantries">
     <div class="sec-head"><span class="sec-num">V</span><h2>Cuisine Pantries</h2></div>
-    <p class="sec-sub">Each cuisine is a small set of high-impact ingredients. Buy shelf-stable items occasionally; refresh herbs and produce weekly. <b>Tap an item to mark it stocked</b> — what stays unchecked is the shopping list. Saved on this device.</p>
+    <p class="sec-sub">Each cuisine's key ingredients. <b>Tap the ones you need</b> (or <b>Add all</b> when you're committing to a cuisine) to build a shopping list, then <b>Share</b> it — it sends as plain text to Messages, Notes, or your partner. The always-stocked staples live in the Shared Backbone above; this is just the week's gaps. Saved on this device.</p>
     <div id="pantryMount"></div>
   </section>
 
@@ -307,6 +331,15 @@
   <div class="fr"></div>
   <p class="sm">Five bases · Nine cuisines · Twenty-nine dishes</p>
 </footer>
+
+<div id="listbar" aria-live="polite">
+  <span class="lc"><b id="listCount">0</b> on your list</span>
+  <div class="lb-actions">
+    <button id="clearList" type="button">Clear</button>
+    <button id="shareList" type="button" class="primary">Share list</button>
+  </div>
+</div>
+<div id="toast" role="status"></div>
 
 <button id="top" aria-label="Back to top">↑</button>
 
@@ -621,36 +654,81 @@
     cookMount.appendChild(step);
   });
 
-  const STORE="fbk-pantry-v1";
-  let stock={}; try{ stock=JSON.parse(localStorage.getItem(STORE)||"{}"); }catch(e){ stock={}; }
-  function save(){ try{ localStorage.setItem(STORE,JSON.stringify(stock)); }catch(e){} }
+  // ---- Shopping list: tap pantry items to add, then Share a sendable list ----
+  const STORE="fbk-list-v1";
+  let list={}; try{ list=JSON.parse(localStorage.getItem(STORE)||"{}"); }catch(e){ list={}; }
+  function save(){ try{ localStorage.setItem(STORE,JSON.stringify(list)); }catch(e){} }
   const pantryMount=$("#pantryMount");
   CUISINES.forEach(c=>{
     const det=document.createElement("details"); det.className="pantry";
     const sum=document.createElement("summary");
-    sum.innerHTML='<span class="pantry-name">'+esc(c.name)+'</span><span class="pantry-meta"><span class="pantry-stock" data-c="'+c.key+'"></span></span>';
+    sum.innerHTML='<span class="pantry-name">'+esc(c.name)+'</span>'+
+      '<span class="pantry-meta"><span class="pantry-stock" data-c="'+c.key+'"></span>'+
+      '<button type="button" class="addall" data-c="'+c.key+'">Add all</button></span>';
     det.appendChild(sum);
     const items=document.createElement("div"); items.className="pantry-items";
     c.pantry.forEach((p,idx)=>{
       const id=c.key+"::"+idx;
       const it=document.createElement("button");
-      it.type="button"; it.className="pi"+(stock[id]?" checked":"");
+      it.type="button"; it.className="pi"+(list[id]?" checked":""); it.dataset.id=id;
       it.innerHTML='<span class="box"></span>'+esc(p);
       it.addEventListener("click",()=>{
         const on=!it.classList.contains("checked");
         it.classList.toggle("checked",on);
-        if(on) stock[id]=1; else delete stock[id];
-        save(); updateStock(c);
+        if(on) list[id]=p; else delete list[id];
+        save(); updateCount(c); updateBar();
       });
       items.appendChild(it);
     });
-    det.appendChild(items); pantryMount.appendChild(det); updateStock(c);
+    det.appendChild(items); pantryMount.appendChild(det);
+    sum.querySelector(".addall").addEventListener("click",e=>{
+      e.preventDefault(); e.stopPropagation();
+      const allOn=c.pantry.every((p,i)=>list[c.key+"::"+i]);
+      c.pantry.forEach((p,i)=>{ const id=c.key+"::"+i; if(allOn) delete list[id]; else list[id]=p; });
+      items.querySelectorAll(".pi").forEach(b=>b.classList.toggle("checked", !!list[b.dataset.id]));
+      save(); updateCount(c); updateBar();
+    });
+    updateCount(c);
   });
-  function updateStock(c){
-    let have=0; for(let i=0;i<c.pantry.length;i++) if(stock[c.key+"::"+i]) have++;
+  function updateCount(c){
+    let n=0; for(let i=0;i<c.pantry.length;i++) if(list[c.key+"::"+i]) n++;
     const el=document.querySelector('.pantry-stock[data-c="'+c.key+'"]');
-    if(el) el.textContent=have+" / "+c.pantry.length+" stocked";
+    if(el) el.textContent = n ? n+" on list" : "";
+    const aa=document.querySelector('.addall[data-c="'+c.key+'"]');
+    if(aa) aa.textContent = (n>0 && n===c.pantry.length) ? "Clear" : "Add all";
   }
+
+  // ---- list bar + share ----
+  const listbar=$("#listbar"), listCount=$("#listCount");
+  function uniqueNames(){
+    const seen={}, names=[];
+    Object.keys(list).forEach(id=>{ const nm=list[id]; if(!nm) return; const k=String(nm).toLowerCase(); if(!seen[k]){seen[k]=1; names.push(nm);} });
+    return names.sort((a,b)=>a.localeCompare(b));
+  }
+  function totalOnList(){ return uniqueNames().length; }
+  function updateBar(){ const n=totalOnList(); listbar.classList.toggle("show", n>0); if(listCount) listCount.textContent=n; }
+  function buildListText(){
+    const names=uniqueNames();
+    return "Shopping list ("+names.length+" item"+(names.length===1?"":"s")+")\n\n"+names.map(n=>"- "+n).join("\n");
+  }
+  function toast(msg){ const t=$("#toast"); if(!t) return; t.textContent=msg; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2400); }
+  $("#shareList").addEventListener("click", async ()=>{
+    if(totalOnList()===0) return;
+    const text=buildListText();
+    if(navigator.share){ try{ await navigator.share({title:"Shopping list", text:text}); }catch(e){} return; }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      try{ await navigator.clipboard.writeText(text); toast("Shopping list copied — paste it anywhere"); return; }catch(e){}
+    }
+    window.prompt("Copy your shopping list:", text);
+  });
+  $("#clearList").addEventListener("click", ()=>{
+    if(totalOnList()===0) return;
+    if(!window.confirm("Clear the whole shopping list?")) return;
+    list={}; save();
+    document.querySelectorAll(".pi.checked").forEach(b=>b.classList.remove("checked"));
+    CUISINES.forEach(updateCount); updateBar();
+  });
+  updateBar();
 
   const mx=$("#mxTable");
   let head="<thead><tr><th>Base</th>";
