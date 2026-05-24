@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0f12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kitchen">
+<title>The Freezer-Base Kitchen</title>
+<style>
+  :root{
+    --bg:#0d0f12; --bg-2:#11141a; --panel:#151920; --panel-2:#1c212a;
+    --line:#242a33; --line-2:#323a46;
+    --text:#e7ecf1; --dim:#9aa7b4; --mute:#647080;
+    --accent:#8ec5e8; --accent-hi:#b8ddf5;
+    --pork:#d98ac6; --chicken:#6fa8df; --chuck:#9d8ce0; --ground:#4fc1a1; --shrimp:#56c0d4;
+    --salmon:#e0859b;
+    --r:9px; --r-sm:6px;
+    --serif:ui-serif,"New York","Hoefler Text",Garamond,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,"Segoe UI",sans-serif;
+    --maxw:960px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--sans); font-size:17px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px;}
+  ::selection{background:var(--accent); color:#0c1116;}
+
+  .ml{font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700;}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:64px 20px 30px; max-width:var(--maxw); margin:0 auto;}
+  .kicker{color:var(--accent); margin-bottom:20px;}
+  h1.title{
+    font-family:var(--serif); font-weight:600; font-size:clamp(40px,12vw,76px);
+    line-height:.98; letter-spacing:-.02em; margin:0; color:var(--text);
+  }
+  h1.title em{color:var(--accent-hi); font-style:italic; font-weight:500;}
+  .ethos{font-family:var(--serif); font-size:clamp(18px,4.6vw,23px); color:var(--dim);
+    margin:18px 0 0; max-width:30ch; line-height:1.35; font-style:italic;}
+  .premise{margin:24px 0 0; max-width:56ch; color:var(--dim); font-size:15.5px; line-height:1.6;}
+  .premise b{color:var(--text); font-weight:600;}
+  .hero-rule{width:100%; height:1px; background:var(--line); margin:30px 0 0;}
+
+  /* ---------- STICKY FILTER ---------- */
+  .filter{position:sticky; top:0; z-index:50; background:rgba(13,15,18,.92);
+    backdrop-filter:saturate(140%) blur(12px); -webkit-backdrop-filter:saturate(140%) blur(12px);
+    border-bottom:1px solid var(--line);}
+  .filter-inner{max-width:var(--maxw); margin:0 auto; padding:12px 16px 13px;}
+  .filter-label{color:var(--mute); margin:0 2px 10px; display:flex; align-items:center; gap:9px;}
+  .filter-count{color:var(--accent); letter-spacing:.05em;}
+  .chips{display:flex; gap:8px; overflow-x:auto; padding:1px 2px 3px; scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chip{flex:0 0 auto; cursor:pointer; border:1px solid var(--line-2); background:var(--panel);
+    color:var(--dim); padding:10px 15px; border-radius:var(--r-sm); font-size:14.5px; font-weight:600;
+    display:inline-flex; align-items:center; gap:8px; white-space:nowrap; min-height:44px;
+    transition:background .14s, color .14s, border-color .14s;}
+  .chip:active{background:var(--panel-2);}
+  .chip .dot{width:8px;height:8px;border-radius:2px;background:var(--c,var(--mute));}
+  .chip[aria-pressed="true"]{background:var(--panel-2); color:var(--text); border-color:var(--c,var(--accent));}
+  .chip.all .dot{background:var(--accent); border-radius:2px;}
+  .chip.all[aria-pressed="true"]{border-color:var(--accent);}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:50px 0 6px; scroll-margin-top:84px;}
+  .sec-head{display:flex; align-items:baseline; gap:14px;}
+  .sec-num{font-family:var(--serif); font-style:italic; font-size:16px; color:var(--accent); flex:0 0 auto;}
+  h2{font-family:var(--serif); font-weight:600; font-size:clamp(27px,7vw,40px); margin:0; letter-spacing:-.015em;}
+  .sec-sub{color:var(--mute); margin:11px 0 26px; font-size:15px; max-width:64ch; line-height:1.55;}
+  .sec-sub b{color:var(--dim); font-weight:600;}
+
+  /* ---------- BASE CARDS ---------- */
+  .grid{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden;}
+  .bases{grid-template-columns:1fr;}
+  @media(min-width:680px){.bases{grid-template-columns:1fr 1fr;}}
+  .base{background:var(--panel); padding:20px 19px;}
+  .base-top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:13px;}
+  .base-name{font-family:var(--serif); font-size:21px; font-weight:600; line-height:1.1;
+    display:flex; align-items:center; gap:10px;}
+  .base-name .dot{width:9px;height:9px;border-radius:2px;background:var(--c,var(--accent)); flex:0 0 auto;}
+  .base-sub{color:var(--mute); font-size:12.5px; margin:4px 0 0 19px; letter-spacing:.01em;}
+  .method-badge{flex:0 0 auto; color:var(--accent); border:1px solid var(--line-2); border-radius:var(--r-sm);
+    padding:5px 10px; white-space:nowrap; font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;}
+  .base-row{margin-top:12px;}
+  .base-row .lbl{color:var(--mute); display:block; margin-bottom:4px;}
+  .base-row .val{color:var(--dim); font-size:14.5px; line-height:1.5;}
+  .base-yield{margin-top:14px; padding-top:12px; border-top:1px solid var(--line);
+    font-family:var(--serif); font-style:italic; color:var(--accent-hi); font-size:14px;}
+  .base.salmon{grid-column:1/-1;}
+  .base.salmon .base-name .dot{background:var(--salmon);}
+
+  /* ---------- COOK-DAY ---------- */
+  .timeline{border:1px solid var(--line); border-radius:var(--r); overflow:hidden;}
+  .step{display:flex; gap:15px; padding:16px 18px; background:var(--panel);}
+  .step + .step{border-top:1px solid var(--line);}
+  .step .num{flex:0 0 auto; width:28px; height:28px; border:1px solid var(--accent); border-radius:50%;
+    color:var(--accent-hi); font-family:var(--serif); font-size:14px; display:flex; align-items:center; justify-content:center;}
+  .step .body{color:var(--dim); font-size:15px; line-height:1.5; padding-top:2px;}
+  .step .body b{color:var(--text); font-weight:600;}
+
+  /* ---------- RECIPES ---------- */
+  .cuisine-block{margin-bottom:34px; scroll-margin-top:88px;}
+  .cuisine-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+    padding-bottom:12px; border-bottom:1px solid var(--line); margin-bottom:16px;}
+  .cuisine-head .cname{font-family:var(--serif); font-size:25px; font-weight:600; line-height:1;}
+  .cuisine-head .cdesc{font-family:var(--serif); font-style:italic; color:var(--mute); font-size:14.5px;}
+  .recipes-grid{display:grid; gap:12px; grid-template-columns:1fr;}
+  @media(min-width:760px){.recipes-grid{grid-template-columns:1fr 1fr 1fr;}}
+  .recipe{background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    padding:17px 17px 16px; display:flex; flex-direction:column; gap:12px;}
+  .recipe.dim-out{display:none;}
+  .recipe-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+  .recipe-name{font-family:var(--serif); font-size:19px; font-weight:600; line-height:1.15;}
+  .base-tag{flex:0 0 auto; color:var(--c); border:1px solid var(--line-2); border-radius:var(--r-sm);
+    padding:4px 9px; white-space:nowrap; display:inline-flex; align-items:center; gap:6px;
+    font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;}
+  .base-tag .dot{width:6px;height:6px;border-radius:2px;background:var(--c);}
+  ol.steps{margin:0; padding:0; list-style:none; counter-reset:s; display:flex; flex-direction:column; gap:10px;}
+  ol.steps li{position:relative; padding-left:24px; color:var(--dim); font-size:14.5px; line-height:1.5; counter-increment:s;}
+  ol.steps li::before{content:counter(s) "."; position:absolute; left:0; top:0; color:var(--accent);
+    font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;}
+  .greens{margin-top:2px; padding-top:12px; border-top:1px solid var(--line);
+    display:flex; gap:9px; align-items:baseline;}
+  .greens .lbl{color:var(--accent); flex:0 0 auto;}
+  .greens .txt{color:var(--dim); font-size:13.5px; line-height:1.45;}
+
+  /* ---------- MATRIX ---------- */
+  details.matrix{border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--panel);}
+  details.matrix>summary{cursor:pointer; list-style:none; padding:16px 18px; font-family:var(--serif);
+    font-size:18px; font-weight:600; display:flex; align-items:center; justify-content:space-between;}
+  details.matrix>summary::-webkit-details-marker{display:none;}
+  details.matrix>summary .hint{font-family:var(--sans); font-size:12.5px; color:var(--mute); font-weight:400;}
+  details.matrix>summary::after{content:"+"; color:var(--accent); font-size:22px; font-weight:300; margin-left:10px;}
+  details.matrix[open]>summary::after{content:"\2212";}
+  .matrix-scroll{overflow-x:auto; border-top:1px solid var(--line);}
+  table.mx{border-collapse:collapse; width:100%; min-width:580px; font-size:13px;}
+  table.mx th, table.mx td{padding:10px 12px; text-align:left; border-top:1px solid var(--line); vertical-align:top;}
+  table.mx thead th{background:var(--panel-2); color:var(--mute); font-weight:700; border-top:none;
+    font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;}
+  table.mx tbody th{font-weight:600; color:var(--text); white-space:nowrap; font-size:13px;}
+  table.mx tbody th .dot{display:inline-block; width:8px;height:8px;border-radius:2px; margin-right:8px; background:var(--c);}
+  table.mx td.has{color:var(--dim);}
+  table.mx td.none{color:#454d59;}
+
+  /* ---------- PANTRIES ---------- */
+  details.pantry{border:1px solid var(--line); border-radius:var(--r); margin-bottom:10px; overflow:hidden; background:var(--panel);}
+  details.pantry>summary{cursor:pointer; list-style:none; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  details.pantry>summary::-webkit-details-marker{display:none;}
+  .pantry-name{font-family:var(--serif); font-size:20px; font-weight:600;}
+  .pantry-meta{display:flex; align-items:center; gap:13px;}
+  .pantry-stock{color:var(--mute); font-size:12px; font-variant-numeric:tabular-nums; white-space:nowrap; letter-spacing:.03em;}
+  details.pantry>summary::after{content:"+"; color:var(--accent); font-size:22px; font-weight:300; flex:0 0 auto;}
+  details.pantry[open]>summary::after{content:"\2212";}
+  .pantry-items{padding:14px 14px 16px; display:flex; flex-wrap:wrap; gap:7px; border-top:1px solid var(--line);}
+  .pi{display:inline-flex; align-items:center; gap:9px; cursor:pointer; user-select:none;
+    border:1px solid var(--line-2); background:var(--bg-2); color:var(--dim);
+    padding:9px 12px; border-radius:var(--r-sm); font-size:13.5px; line-height:1.2; min-height:40px; transition:.13s;}
+  .pi .box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--mute); flex:0 0 auto; position:relative;}
+  .pi.checked{background:var(--panel-2); color:var(--text); border-color:var(--accent);}
+  .pi.checked .box{background:var(--accent); border-color:var(--accent);}
+  .pi.checked .box::after{content:"\2713"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#0c1116; font-size:11px; font-weight:900;}
+  .pantry-hint{color:var(--mute); font-size:13.5px; margin:0 2px 16px;} .pantry-hint b{color:var(--dim);}
+
+  /* ---------- MARKET ---------- */
+  .market{border:1px solid var(--line); border-radius:var(--r); padding:26px 22px; background:var(--panel);}
+  .market .lead{font-family:var(--serif); font-style:italic; font-size:22px; color:var(--accent-hi); margin:0 0 20px; line-height:1.3;}
+  .market-grid{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r-sm); overflow:hidden;}
+  @media(min-width:620px){.market-grid{grid-template-columns:1fr 1fr;}}
+  .mcat{padding:15px 16px; background:var(--panel);}
+  .mcat .h{color:var(--accent); margin-bottom:6px;}
+  .mcat .d{color:var(--dim); font-size:14.5px; line-height:1.55;}
+  .mcat .d em{color:var(--mute); font-style:normal; font-size:13px;}
+  .market .foot{margin-top:18px; color:var(--mute); font-size:14px; border-top:1px solid var(--line); padding-top:15px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{text-align:center; padding:54px 20px 64px; color:var(--mute);}
+  footer .fr{width:100%; height:1px; background:var(--line); margin:0 auto 24px; max-width:var(--maxw);}
+  footer .sm{font-size:11px; letter-spacing:.22em; text-transform:uppercase;}
+
+  /* ---------- TOP ---------- */
+  #top{position:fixed; right:16px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:60;
+    width:46px;height:46px;border-radius:var(--r-sm); background:var(--panel-2); border:1px solid var(--line-2);
+    color:var(--accent); font-size:19px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; pointer-events:none; transition:opacity .22s;}
+  #top.show{opacity:1; pointer-events:auto;}
+  #top:active{background:var(--panel);}
+
+  noscript .ns{background:var(--panel); border:1px solid var(--accent); border-radius:var(--r); padding:14px; margin:16px 0; color:var(--dim);}
+
+  /* ---------- PRINT ---------- */
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel-2:#eef1f4;--bg-2:#fff;--text:#10141a;--dim:#33404c;--mute:#5c6772;--line:#d3d9df;--line-2:#c6ced6;--accent:#2c5167;--accent-hi:#223f51;}
+    body{background:#fff;} .filter,#top{display:none!important;}
+    .recipe.dim-out{display:flex!important;}
+    .recipe,.base,.step,.mcat{break-inside:avoid;}
+    section{padding:16px 0;} header.hero{padding:8px 0;}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto!important;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker ml">Kitchen Reference</div>
+  <h1 class="title">The Freezer&#8209;Base <em>Kitchen</em></h1>
+  <p class="ethos">Five protein bases. Seven cuisines. Twenty-one dishes.</p>
+  <p class="premise">Five neutral protein bases from one shopping run, cooked in a single afternoon and frozen flat. Each of the 21 dishes pulls <b>one thawed base</b>, a few pantry staples, and a green — most are ready in 10–15 minutes.</p>
+  <div class="hero-rule"></div>
+</header>
+
+<nav class="filter" aria-label="Filter recipes by base">
+  <div class="filter-inner">
+    <div class="filter-label ml">What's thawing? <span class="filter-count" id="count"></span></div>
+    <div class="chips" id="chips" role="group"></div>
+  </div>
+</nav>
+
+<noscript><div class="wrap"><div class="ns">Tap-to-filter and the pantry checklist need JavaScript. All recipes are listed below regardless.</div></div></noscript>
+
+<main class="wrap">
+
+  <section id="recipes">
+    <div class="sec-head"><span class="sec-num">I</span><h2>The Dishes</h2></div>
+    <p class="sec-sub">Tap a protein above to see every dish it makes. Each pulls a thawed base, a handful of pantry staples, and a green.</p>
+    <div id="recipeMount"></div>
+  </section>
+
+  <section id="bases">
+    <div class="sec-head"><span class="sec-num">II</span><h2>The Bases</h2></div>
+    <p class="sec-sub">Five proteins, each cooked by the method that suits it, then portioned and frozen flat in two-serving packs. Cooked neutral so one batch becomes any cuisine. Nothing competes for equipment — the whole session runs in parallel in one afternoon.</p>
+    <div class="grid bases" id="baseMount"></div>
+  </section>
+
+  <section id="cookday">
+    <div class="sec-head"><span class="sec-num">III</span><h2>Cook-Day Sequence</h2></div>
+    <p class="sec-sub">One afternoon, everything in parallel. Nothing competes for the same burner.</p>
+    <div class="timeline" id="cookMount"></div>
+  </section>
+
+  <section id="pantries">
+    <div class="sec-head"><span class="sec-num">IV</span><h2>Cuisine Pantries</h2></div>
+    <p class="sec-sub">Each cuisine is a small set of high-impact ingredients. Buy shelf-stable items occasionally; refresh herbs and produce weekly. <b>Tap an item to mark it stocked</b> — what stays unchecked is the shopping list. Saved on this device.</p>
+    <div id="pantryMount"></div>
+  </section>
+
+  <section id="matrix">
+    <div class="sec-head"><span class="sec-num">V</span><h2>The Matrix</h2></div>
+    <p class="sec-sub">The whole system on one grid — which base becomes which dish, in every cuisine.</p>
+    <details class="matrix">
+      <summary>Base × Cuisine <span class="hint">tap to open · scrolls sideways</span></summary>
+      <div class="matrix-scroll"><table class="mx" id="mxTable"></table></div>
+    </details>
+  </section>
+
+  <section id="market">
+    <div class="sec-head"><span class="sec-num">VI</span><h2>The Weekly Market Run</h2></div>
+    <p class="sec-sub">The bases and pantries are done. Weekly, refresh produce, herbs, and greens.</p>
+    <div class="market">
+      <p class="lead">Shop brightness, not recipes.</p>
+      <div class="market-grid">
+        <div class="mcat"><div class="h ml">Leafy greens</div><div class="d">A bunch or two every trip. <em>Asian market — gai lan, bok choy, pea shoots, yu choy, long beans. Whole Foods — kale, chard, escarole, spinach, arugula.</em></div></div>
+        <div class="mcat"><div class="h ml">Fresh herbs</div><div class="d">Cilantro, basil, dill, mint, parsley, scallions.</div></div>
+        <div class="mcat"><div class="h ml">Acid &amp; crunch</div><div class="d">Citrus, cucumber, radish, cabbage, in-season tomato.</div></div>
+        <div class="mcat"><div class="h ml">One fresh protein</div><div class="d">Salmon, eggs, or extra shrimp.</div></div>
+      </div>
+      <p class="foot">Asian and specialty markets handle shelf-stable pantry restocks occasionally — not weekly.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fr"></div>
+  <p class="sm">Five bases · Seven cuisines · Twenty-one dishes</p>
+</footer>
+
+<button id="top" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  "use strict";
+
+  const BASES = [
+    { key:"pork", name:"Pork shoulder", sub:"Boston butt · 7–9 lb", method:"Instant Pot / braise",
+      bulk:"Cut into 4 chunks, salt well, 1 cup stock, onion, garlic, bay. High pressure 75 min + 15 min natural release; or lidded 300°F for 3.5–4 hrs.",
+      portion:"Shred, discard fat and bone, fold back skimmed juices.", yield:"6–8 packs of ~2 cups" },
+    { key:"chicken", name:"Chicken thighs", sub:"Boneless, skinless · 5–6 lb", method:"Sous vide (best)",
+      bulk:"Salt, bag flat, 165°F for 1.5–2 hrs. Or convection 425°F ~22 min to 175°F.",
+      portion:"Whole for juicier reheats, or chopped for speed.", yield:"5–7 two-serving packs, a little oil" },
+    { key:"chuck", name:"Beef chuck roast", sub:"~6–8 lb", method:"Braise / Instant Pot",
+      bulk:"Salt, sear hard, aromatics + 1.5 cups stock or wine, lid on, 300°F for 3–3.5 hrs; or high pressure 60 min + natural release.",
+      portion:"Shred or hand-cube, keep in the braising liquid.", yield:"6–8 two-serving packs" },
+    { key:"ground", name:"Ground pork", sub:"or beef · 85/15 · big pack", method:"Stovetop, loose",
+      bulk:"Brown loose in batches, don't crowd, salt only, drain, cool. Pork for mapo and larb; beef when you want ragù, picadillo, chili, or kofte.",
+      portion:"Portion loose into ~1.5 cup packs. Thaws in minutes.", yield:"Pork & beef both freeze loose, flat" },
+    { key:"shrimp", name:"Shrimp", sub:"Raw, frozen · Costco bag", method:"Cook from frozen",
+      bulk:"No prep — already portioned and frozen.",
+      portion:"Pull a handful, rinse under cool water 5 min.", yield:"Cooks fresh in 3–4 min" }
+  ];
+  const BASE_LABEL = {pork:"Pork", chicken:"Chicken", chuck:"Beef chuck", ground:"Ground pork", shrimp:"Shrimp"};
+  const BASE_ORDER = ["pork","chicken","chuck","ground","shrimp"];
+
+  const SALMON = {
+    name:"Salmon", note:"the one that doesn't freeze",
+    body:"Cooked salmon does not freeze. Buy a whole Costco side and cure it gravlax-style in the fridge: coat the flesh side with a 2:1 salt-sugar mix, citrus zest, white pepper, a splash of gin or aquavit, and dill; wrap tight, weight it, turn daily for 2–3 days; rinse, dry, slice thin.",
+    keep:"Keeps about a week over bread, eggs, or shaved-fennel salad. Do not freeze the finished cure."
+  };
+
+  const COOKDAY = [
+    "Season <b>pork</b>, into the Instant Pot. Season and sear <b>chuck</b>, into the 300°F oven braiser. Set the <b>sous vide</b> to 165°F.",
+    "Bag <b>chicken thighs</b> into the bath (1.5–2 hrs). Brown <b>ground pork (or beef)</b> on the stovetop, drain, cool.",
+    "Pork done — <b>shred</b>. Chicken done — <b>cool</b>. Chuck <b>shreds with a fork</b>.",
+    "Portion and <b>vacuum-seal everything flat</b> with a little cooking liquid or oil. Label and date. Shrimp stays in its bag."
+  ];
+
+  const CUISINES = [
+    { key:"szechuan", name:"Szechuan", desc:"bold, numbing, layered",
+      pantry:["Sichuan peppercorns","Pixian doubanjiang","Chinkiang black vinegar","light & dark soy","Shaoxing wine","chili crisp","dried Tianjin chilies","toasted sesame oil","fermented black beans","ginger","garlic","scallions","white pepper","cornstarch","peanuts","jasmine rice","fresh chilies","cilantro","bok choy"],
+      dishes:[
+        {name:"Mapo tofu", base:"ground", steps:[
+          "Bloom 1 tbsp doubanjiang and a pinch of crushed Sichuan peppercorn in hot oil with garlic and ginger until red and fragrant.",
+          "Add thawed ground pork, a splash of Shaoxing, soy, and stock. Slide in cubed silken tofu; simmer 5 min, thicken with a cornstarch slurry.",
+          "Finish with scallion, chili crisp, and ground toasted Sichuan peppercorn. Over rice."],
+          greens:"Wilt chopped bok choy or pea shoots in at the end; or a side of garlic gai lan."},
+        {name:"Twice-cooked pork", base:"pork", steps:[
+          "Crisp thawed pork hard in a dry hot wok until the edges char.",
+          "Add doubanjiang, fermented black beans, garlic, and a generous handful of bok choy or leek; toss 2 min.",
+          "Deglaze with Shaoxing and a touch of dark soy and sugar; glaze and serve over rice."],
+          greens:"Pile in leek, gai lan, or cabbage and let it char with the pork."},
+        {name:"Kung pao shrimp", base:"shrimp", steps:[
+          "Thaw shrimp under cool water. Stir-fry dried chilies and Sichuan peppercorn in oil briefly, then the shrimp 2 min.",
+          "Add garlic, ginger, scallion whites, and a sauce of soy, black vinegar, sugar, and cornstarch.",
+          "Toss in peanuts off the heat; finish with scallion greens."],
+          greens:"Add diced celery and green pepper with the aromatics; smashed cucumber alongside."}
+      ]},
+    { key:"mexican", name:"Mexican", desc:"bright, smoky, fresh",
+      pantry:["Dried guajillo/ancho chilies","chipotle in adobo","Mexican oregano","cumin","good corn tortillas","white onion","limes","cilantro","cotija or queso fresco","crema","tomatillos","avocado","garlic","black beans","fresh serrano","smoked paprika","pickled onions"],
+      dishes:[
+        {name:"Carnitas tacos", base:"pork", steps:[
+          "Crisp thawed pork hard under the broiler or in a dry pan until the edges crackle.",
+          "Squeeze over orange and lime, season with salt and a pinch of cumin.",
+          "Warm corn tortillas over the flame; build with raw white onion, cilantro, salsa, pickled onion."],
+          greens:"Top with a lime-cabbage slaw; cilantro by the handful."},
+        {name:"Barbacoa bowl", base:"chuck", steps:[
+          "Warm thawed shredded chuck with a little chipotle in adobo and its braising liquid.",
+          "Build over rice and black beans with avocado, cotija, crema, and pickled onion.",
+          "Finish with cilantro and a squeeze of lime."],
+          greens:"Pile on shredded romaine or cabbage; sautéed kale underneath."},
+        {name:"Camarones a la diabla", base:"shrimp", steps:[
+          "Blend rehydrated guajillo and chipotle with garlic and a little tomato into a smooth salsa.",
+          "Thaw shrimp, sear 1 min, add the salsa and simmer 2–3 min until coated.",
+          "Serve with rice and warm tortillas; lime and cilantro to finish."],
+          greens:"A cabbage-lime slaw alongside, or grilled zucchini."}
+      ]},
+    { key:"italian", name:"Italian", desc:"restrained, ingredient-driven",
+      pantry:["San Marzano tomatoes","good olive oil","Parmigiano-Reggiano (save rinds)","guanciale or pancetta","dried pasta","Calabrian chili paste","anchovies","capers","garlic","basil","oregano","red wine","cannellini beans","polenta","lemon","flat-leaf parsley","fresh mozzarella"],
+      dishes:[
+        {name:"Pork sugo & rigatoni", base:"pork", steps:[
+          "Warm thawed pork in hand-crushed San Marzanos with garlic, a spoon of Calabrian chili, a parmesan rind, and olive oil; simmer 10–15 min.",
+          "Toss with al dente rigatoni and a ladle of pasta water.",
+          "Finish with Parmigiano and torn basil."],
+          greens:"Stir a few handfuls of escarole or kale into the sauce as it simmers."},
+        {name:"Chuck ragù over polenta", base:"chuck", steps:[
+          "Warm thawed chuck in its braising liquid loosened with a little red wine and tomato.",
+          "Cook soft polenta with butter and Parmigiano.",
+          "Spoon the ragù over polenta; parsley and a thread of olive oil."],
+          greens:"Fold cavolo nero into the ragù, or broccoli rabe on the side."},
+        {name:"Shrimp & cannellini", base:"shrimp", steps:[
+          "Warm cannellini in olive oil with garlic, anchovy, and Calabrian chili until creamy.",
+          "Sear thawed shrimp 2 min; fold into the beans.",
+          "Lemon, parsley, good oil; serve with grilled bread."],
+          greens:"Wilt a big handful of spinach or escarole into the beans."}
+      ]},
+    { key:"spanish", name:"Spanish", desc:"smoky paprika, sherry, garlic",
+      pantry:["Pimentón (sweet & hot)","saffron","sherry vinegar","Marcona almonds","manchego","good olive oil","piquillo peppers","chickpeas","fino/manzanilla sherry","garlic","bomba rice","canned tomato","parsley","cured chorizo","green olives"],
+      dishes:[
+        {name:"Gambas al ajillo", base:"shrimp", steps:[
+          "Warm sliced garlic and a dried chili in plenty of olive oil until just golden.",
+          "Add thawed shrimp, a pinch of pimentón, a splash of fino; cook 2–3 min.",
+          "Parsley and lemon; serve with crusty bread."],
+          greens:"Throw spinach into the pan at the end (espinacas), or grilled asparagus alongside."},
+        {name:"Ropa vieja-style chuck", base:"chuck", steps:[
+          "Warm thawed shredded chuck with piquillo strips, tomato, garlic, and pimentón.",
+          "Loosen with a splash of sherry; simmer 5 min.",
+          "Over bomba rice with green olives and parsley."],
+          greens:"Sautéed chard alongside, or a sharp green salad."},
+        {name:"Pork & chickpea guiso", base:"pork", steps:[
+          "Warm thawed pork with chickpeas, tomato, garlic, smoked paprika, and a little stock.",
+          "Simmer 10 min until thick.",
+          "Parsley and a drizzle of olive oil; bread alongside."],
+          greens:"Stir spinach or chard in at the end until just wilted."}
+      ]},
+    { key:"thai", name:"Thai", desc:"hot, sour, sweet, herbal",
+      pantry:["Red & green curry paste","full-fat coconut milk","fish sauce","palm sugar","limes","Thai basil","cilantro","jasmine rice","rice noodles","bird's-eye chilies","galangal","lemongrass","makrut lime leaves","tamarind","roasted peanuts","shallots","garlic"],
+      dishes:[
+        {name:"Green curry chicken", base:"chicken", steps:[
+          "Fry 2 tbsp green curry paste in thick coconut cream until it splits and smells fragrant.",
+          "Add the rest of the coconut milk, fish sauce, a little palm sugar, and thawed sliced thigh; simmer 6–8 min.",
+          "Off heat: lime and torn Thai basil. Over jasmine rice."],
+          greens:"Simmer in Thai eggplant and long beans; a fist of Thai basil to finish."},
+        {name:"Pork larb", base:"ground", steps:[
+          "Crisp thawed ground pork in a hot dry pan until cooked through and a little browned.",
+          "Toss off heat with fish sauce, lime, sugar, shallot, chili, and toasted-rice powder if you have it.",
+          "Pile into lettuce cups with mint and cilantro."],
+          greens:"Lettuce cups, cucumber, long beans, and herbs by the fistful — pile it on."},
+        {name:"Tamarind shrimp stir-fry", base:"shrimp", steps:[
+          "Whisk tamarind, fish sauce, and palm sugar into a quick sauce.",
+          "Sear thawed shrimp with garlic and chili 2 min; add the sauce to glaze.",
+          "Finish with peanuts and cilantro; over rice or noodles."],
+          greens:"Toss in Chinese broccoli or long beans; herbs to finish."}
+      ]},
+    { key:"greek", name:"Greek / Mediterranean", desc:"olive oil, lemon, herbs",
+      pantry:["Good olive oil","dried oregano","lemons","feta in brine","kalamata olives","Greek yogurt","garlic","cucumbers","ripe tomatoes","red onion","pita","chickpeas","tahini","sumac","fresh dill and mint","capers","red wine vinegar"],
+      dishes:[
+        {name:"Lemon-oregano chicken bowl", base:"chicken", steps:[
+          "Char thawed thigh in a hot pan with olive oil; finish with lemon and oregano.",
+          "Build with cucumber, tomato, red onion, kalamata, feta, and tzatziki (yogurt, grated cucumber, garlic, dill).",
+          "Warm pita alongside."],
+          greens:"A pile of dressed arugula, or sautéed horta (greens) on the side."},
+        {name:"Pork gyro plate", base:"pork", steps:[
+          "Crisp thawed pork with oregano, garlic, and a little lemon.",
+          "Wrap in warm pita with tomato, onion, and tzatziki, or plate over rice.",
+          "Sumac and dill to finish."],
+          greens:"A big chopped salad — cucumber, tomato, parsley, red onion."},
+        {name:"Shrimp saganaki", base:"shrimp", steps:[
+          "Simmer tomato with garlic, a pinch of chili, and oregano 5 min.",
+          "Add thawed shrimp and crumbled feta; cook 3 min until just set.",
+          "Parsley and lemon; bread to mop."],
+          greens:"Wilt spinach into the tomato; horta or a Greek salad alongside."}
+      ]},
+    { key:"french", name:"French", desc:"butter, mustard, wine",
+      pantry:["Dijon and grainy mustard","good butter","shallots","dry white wine","Cognac","fresh thyme and tarragon","crème fraîche","Gruyère","lentils du Puy","white wine vinegar","capers","cornichons","garlic","bay"],
+      dishes:[
+        {name:"Chicken in mustard pan sauce", base:"chicken", steps:[
+          "Sweat minced shallot in butter, deglaze with white wine, reduce by half.",
+          "Whisk in Dijon and a spoon of crème fraîche; add thyme. Warm thawed thigh 3–4 min.",
+          "Plate over lentils du Puy or mashed potato."],
+          greens:"A frisée or green salad, or buttered haricots verts."},
+        {name:"Beef chuck bourguignon-style", base:"chuck", steps:[
+          "Warm thawed chuck in its braising liquid reduced with red wine, a little tomato, and thyme.",
+          "Add sautéed mushrooms and pearl onions if you have them.",
+          "Over buttered noodles or mashed potato; parsley."],
+          greens:"Sautéed spinach or haricots verts to cut the richness."},
+        {name:"Pork rillettes toast", base:"pork", steps:[
+          "Mash thawed pork with a little soft butter, cracked pepper, and thyme until spreadable.",
+          "Spread thick on toasted bread.",
+          "Serve with cornichons and grainy mustard; a quick lunch or starter."],
+          greens:"A sharp frisée-and-herb salad alongside the cornichons."}
+      ]}
+  ];
+
+  const $ = s => document.querySelector(s);
+  const cvar = k => "var(--"+k+")";
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+  let activeBase="all";
+  const chipsEl=$("#chips");
+  function chip(key,label,colorKey){
+    const b=document.createElement("button");
+    b.className="chip"+(key==="all"?" all":"");
+    b.type="button"; b.dataset.base=key; b.setAttribute("aria-pressed", key==="all"?"true":"false");
+    if(colorKey) b.style.setProperty("--c", cvar(colorKey));
+    b.innerHTML='<span class="dot"></span>'+esc(label);
+    b.addEventListener("click",()=>setBase(key));
+    return b;
+  }
+  chipsEl.appendChild(chip("all","All dishes"));
+  BASE_ORDER.forEach(k=>chipsEl.appendChild(chip(k,BASE_LABEL[k],k)));
+  function setBase(key){
+    activeBase=key;
+    [...chipsEl.children].forEach(c=>c.setAttribute("aria-pressed", c.dataset.base===key?"true":"false"));
+    applyFilter();
+  }
+
+  const mount=$("#recipeMount");
+  CUISINES.forEach(c=>{
+    const block=document.createElement("div");
+    block.className="cuisine-block"; block.id="c-"+c.key;
+    block.innerHTML='<div class="cuisine-head"><span class="cname">'+esc(c.name)+'</span><span class="cdesc">'+esc(c.desc)+'</span></div>';
+    const grid=document.createElement("div"); grid.className="recipes-grid";
+    c.dishes.forEach(d=>{
+      const card=document.createElement("article");
+      card.className="recipe"; card.dataset.base=d.base; card.style.setProperty("--c",cvar(d.base));
+      card.innerHTML=
+        '<div class="recipe-top"><h3 class="recipe-name">'+esc(d.name)+'</h3>'+
+        '<span class="base-tag"><span class="dot"></span>'+esc(BASE_LABEL[d.base])+'</span></div>'+
+        '<ol class="steps"><li>'+d.steps.map(esc).join('</li><li>')+'</li></ol>'+
+        '<div class="greens"><span class="lbl ml">Greens</span><span class="txt">'+esc(d.greens)+'</span></div>';
+      grid.appendChild(card);
+    });
+    block.appendChild(grid); mount.appendChild(block);
+  });
+  const countEl=$("#count");
+  function applyFilter(){
+    let shown=0;
+    document.querySelectorAll(".cuisine-block").forEach(block=>{
+      let v=0;
+      block.querySelectorAll(".recipe").forEach(r=>{
+        const m=activeBase==="all"||r.dataset.base===activeBase;
+        r.classList.toggle("dim-out",!m); if(m){v++;shown++;}
+      });
+      block.style.display=v===0?"none":"";
+    });
+    countEl.textContent = activeBase==="all" ? "· all 21" : "· "+shown+" with "+BASE_LABEL[activeBase].toLowerCase();
+  }
+
+  const baseMount=$("#baseMount");
+  BASES.forEach(b=>{
+    const el=document.createElement("article");
+    el.className="base"; el.style.setProperty("--c",cvar(b.key));
+    el.innerHTML=
+      '<div class="base-top"><div><div class="base-name"><span class="dot"></span>'+esc(b.name)+'</div>'+
+      '<div class="base-sub">'+esc(b.sub)+'</div></div>'+
+      '<span class="method-badge">'+esc(b.method)+'</span></div>'+
+      '<div class="base-row"><span class="lbl ml">Bulk cook · neutral</span><span class="val">'+esc(b.bulk)+'</span></div>'+
+      '<div class="base-row"><span class="lbl ml">Butcher / portion</span><span class="val">'+esc(b.portion)+'</span></div>'+
+      '<div class="base-yield">'+esc(b.yield)+'</div>';
+    baseMount.appendChild(el);
+  });
+  const sal=document.createElement("article");
+  sal.className="base salmon";
+  sal.innerHTML=
+    '<div class="base-top"><div><div class="base-name"><span class="dot"></span>'+esc(SALMON.name)+'</div>'+
+    '<div class="base-sub">Side note · '+esc(SALMON.note)+'</div></div></div>'+
+    '<div class="base-row"><span class="val">'+esc(SALMON.body)+'</span></div>'+
+    '<div class="base-yield">'+esc(SALMON.keep)+'</div>';
+  baseMount.appendChild(sal);
+
+  const cookMount=$("#cookMount");
+  COOKDAY.forEach((s,i)=>{
+    const step=document.createElement("div"); step.className="step";
+    step.innerHTML='<div class="num">'+(i+1)+'</div><div class="body">'+s+'</div>';
+    cookMount.appendChild(step);
+  });
+
+  const STORE="fbk-pantry-v1";
+  let stock={}; try{ stock=JSON.parse(localStorage.getItem(STORE)||"{}"); }catch(e){ stock={}; }
+  function save(){ try{ localStorage.setItem(STORE,JSON.stringify(stock)); }catch(e){} }
+  const pantryMount=$("#pantryMount");
+  CUISINES.forEach(c=>{
+    const det=document.createElement("details"); det.className="pantry";
+    const sum=document.createElement("summary");
+    sum.innerHTML='<span class="pantry-name">'+esc(c.name)+'</span><span class="pantry-meta"><span class="pantry-stock" data-c="'+c.key+'"></span></span>';
+    det.appendChild(sum);
+    const items=document.createElement("div"); items.className="pantry-items";
+    c.pantry.forEach((p,idx)=>{
+      const id=c.key+"::"+idx;
+      const it=document.createElement("button");
+      it.type="button"; it.className="pi"+(stock[id]?" checked":"");
+      it.innerHTML='<span class="box"></span>'+esc(p);
+      it.addEventListener("click",()=>{
+        const on=!it.classList.contains("checked");
+        it.classList.toggle("checked",on);
+        if(on) stock[id]=1; else delete stock[id];
+        save(); updateStock(c);
+      });
+      items.appendChild(it);
+    });
+    det.appendChild(items); pantryMount.appendChild(det); updateStock(c);
+  });
+  function updateStock(c){
+    let have=0; for(let i=0;i<c.pantry.length;i++) if(stock[c.key+"::"+i]) have++;
+    const el=document.querySelector('.pantry-stock[data-c="'+c.key+'"]');
+    if(el) el.textContent=have+" / "+c.pantry.length+" stocked";
+  }
+
+  const mx=$("#mxTable");
+  let head="<thead><tr><th>Base</th>";
+  CUISINES.forEach(c=> head+="<th>"+esc(c.name.replace(" / Mediterranean",""))+"</th>");
+  head+="</tr></thead><tbody>";
+  BASE_ORDER.forEach(bk=>{
+    head+='<tr><th><span class="dot" style="background:'+cvar(bk)+'"></span>'+esc(BASE_LABEL[bk])+"</th>";
+    CUISINES.forEach(c=>{
+      const d=c.dishes.find(x=>x.base===bk);
+      head+= d?'<td class="has">'+esc(d.name)+"</td>":'<td class="none">—</td>';
+    });
+    head+="</tr>";
+  });
+  head+="</tbody>"; mx.innerHTML=head;
+
+  const topBtn=$("#top");
+  topBtn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+  let ticking=false;
+  window.addEventListener("scroll",()=>{
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(()=>{ topBtn.classList.toggle("show",window.scrollY>600); ticking=false; });
+  },{passive:true});
+
+  applyFilter();
+})();
+</script>
+</body>
+</html>
