@@ -129,6 +129,7 @@
   ol.steps li{position:relative; padding-left:24px; color:var(--dim); font-size:14.5px; line-height:1.5; counter-increment:s;}
   ol.steps li::before{content:counter(s) "."; position:absolute; left:0; top:0; color:var(--accent);
     font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;}
+  ol.steps li b{color:var(--text); font-weight:600;}
   .greens{margin-top:1px; padding-top:11px; border-top:1px solid var(--line);
     display:flex; gap:9px; align-items:baseline;}
   .greens .lbl{color:var(--accent); flex:0 0 auto;}
@@ -180,7 +181,8 @@
   .mcat .h{color:var(--accent); margin-bottom:6px;}
   .mcat .d{color:var(--dim); font-size:14.5px; line-height:1.55;}
   .mcat .d em{color:var(--mute); font-style:normal; font-size:13px;}
-  .market .foot{margin-top:18px; color:var(--mute); font-size:14px; border-top:1px solid var(--line); padding-top:15px;}
+  .market .foot{margin-top:18px; color:var(--mute); font-size:14px; border-top:1px solid var(--line); padding-top:15px; line-height:1.7;}
+  .market .foot b{color:var(--dim);}
 
   /* ---------- FOOTER ---------- */
   footer{text-align:center; padding:54px 20px 64px; color:var(--mute);}
@@ -231,7 +233,7 @@
 
   <section id="recipes">
     <div class="sec-head"><span class="sec-num">I</span><h2>The Dishes</h2></div>
-    <p class="sec-sub">Tap a protein above to see every dish it makes. Each card shows rough per-serving protein and fiber — most land at <b>25–35g protein</b>; lean on the bean, lentil, and grain dishes (Fresh Bowls, Levantine, Mexican bowls, French lentils) to reach <b>~30g fiber across the day</b>.</p>
+    <p class="sec-sub">Tap a protein above to see every dish it makes. Each recipe serves <b>~2 (one thawed pack)</b>; quantities are starting points — taste and adjust. Cards show rough per-serving protein and fiber; lean on the bean, lentil, and grain dishes (Fresh Bowls, Levantine, Mexican bowls, French lentils) to reach <b>~30g fiber across the day</b>.</p>
     <div id="recipeMount"></div>
   </section>
 
@@ -345,72 +347,72 @@
     "Portion and <b>vacuum-seal everything flat</b> with a little cooking liquid or oil. Label and date. Shrimp stays in its bag."
   ];
 
-  // protein (p) and fiber (f) are approximate grams per serving
+  // p = protein, f = fiber — approximate grams per serving. Each recipe serves ~2 (one thawed pack).
   const CUISINES = [
     { key:"freshbowls", name:"Fresh Bowls", desc:"grain bowls, herbs, crunch, bright sauces",
       pantry:["Quinoa","farro","brown rice","edamame","avocado","cucumber","radish","kimchi","gochujang","rice vinegar","tahini","Greek yogurt","cilantro","mint","basil","dill","scallions","ginger","toasted sesame seeds & oil","nori","sriracha","limes","carrots & daikon","sugar snap peas"],
       dishes:[
         {name:"Green goddess chicken bowl", base:"chicken", p:34, f:12, steps:[
-          "Blend a green goddess sauce: Greek yogurt, a big handful of herbs (basil, parsley, dill), garlic, lemon, and olive oil.",
-          "Warm thawed chicken; spoon over cooked farro or quinoa with cucumber, avocado, and sugar snap peas.",
-          "Pile on greens, drizzle the sauce generously, finish with lemon and black pepper."],
+          "Blend the sauce: <b>½ cup Greek yogurt</b>, <b>1 packed cup soft herbs</b> (basil, parsley, dill), 1 garlic clove, juice of <b>½ lemon</b>, 2 tbsp olive oil, and a pinch of salt until green and pourable.",
+          "Slice <b>1 thawed pack chicken</b> (~2 cups) and warm through. Spoon over <b>2 cups cooked farro or quinoa</b> with ½ sliced cucumber, 1 sliced avocado, and a handful of sugar snap peas.",
+          "Set it all on a bed of greens, drizzle <b>~⅓ cup sauce</b>, and finish with lemon and black pepper."],
           greens:"Built on greens — baby kale or arugula under everything; herbs by the handful."},
         {name:"Gochujang beef rice bowl", base:"chuck", p:33, f:9, steps:[
-          "Glaze thawed shredded chuck in gochujang, soy, sesame oil, garlic, and a little honey; warm through.",
-          "Build over brown rice with kimchi, quick-pickled cucumber, and wilted spinach.",
-          "Sesame seeds and scallion; a fried egg if you want one."],
+          "Glaze <b>1 thawed pack chuck</b> (~2 cups) in <b>1½ tbsp gochujang</b>, 1 tbsp soy, 2 tsp sesame oil, 1 grated garlic clove, and 1 tsp honey; warm 3–4 min.",
+          "Build over <b>2 cups brown rice</b> with ½ cup kimchi, a handful of quick-pickled cucumber, and a handful of wilted spinach.",
+          "Top with 1 tsp toasted sesame, sliced scallion, and a fried egg if you like."],
           greens:"Wilt spinach into the warm rice; kimchi and cucumber for crunch."},
         {name:"Ginger-scallion pork bowl", base:"ground", p:30, f:11, steps:[
-          "Crisp thawed ground pork; toss off the heat with a raw ginger, scallion, soy, and sesame sauce.",
-          "Spoon over brown rice with edamame and quick-pickled cucumber and carrot.",
-          "Sesame, more scallion, and a dab of chili crisp."],
+          "Crisp <b>1 thawed pack ground pork</b> (~1½ cups) in a hot pan, 4–5 min.",
+          "Off the heat, toss with <b>2 tbsp soy</b>, 1 tbsp grated ginger, 3 chopped scallions, and 1 tbsp sesame oil.",
+          "Spoon over <b>2 cups brown rice</b> with ½ cup edamame and quick-pickled cucumber and carrot; finish with sesame and 1 tsp chili crisp."],
           greens:"Edamame and a fist of scallion; quick-pickled cucumber and carrot."},
         {name:"Shrimp poke-style bowl", base:"shrimp", p:30, f:10, steps:[
-          "Toss seared (or chilled cooked) shrimp with soy, sesame oil, rice vinegar, and a little lime.",
-          "Build over rice with edamame, cucumber, avocado, shredded carrot, and torn nori.",
-          "Sesame seeds, scallion, and sriracha-mayo or extra soy-lime."],
+          "Toss <b>~½ lb cooked shrimp</b> with 1 tbsp soy, 1 tsp sesame oil, 2 tsp rice vinegar, and a squeeze of lime.",
+          "Build over <b>2 cups rice</b> with ½ cup edamame, ½ diced cucumber, 1 sliced avocado, shredded carrot, and torn nori.",
+          "Finish with sesame, scallion, and a drizzle of sriracha-mayo (2 tbsp mayo + 1 tsp sriracha)."],
           greens:"Edamame, cucumber, avocado, shredded carrot — keep it vegetable-heavy."},
         {name:"Banh mi pork bowl", base:"pork", p:30, f:8, steps:[
-          "Crisp thawed pork; glaze with a little soy, lime, and sugar (or hoisin).",
-          "Build over rice or rice vermicelli with pickled carrot-daikon, cucumber, and jalapeño.",
-          "A big handful of cilantro and mint; sriracha-lime mayo or nuoc cham to finish."],
+          "Crisp <b>1 thawed pack pork</b> (~2 cups); glaze with 1 tbsp soy, 1 tsp sugar, and a squeeze of lime (or 1 tbsp hoisin).",
+          "Build over <b>2 cups rice or rice vermicelli</b> with ½ cup pickled carrot-daikon, ½ sliced cucumber, and a few jalapeño slices.",
+          "Pile on cilantro and mint; finish with sriracha-lime mayo or a spoonful of nuoc cham."],
           greens:"Pickled carrot-daikon, cucumber, and a big handful of cilantro and mint."}
       ]},
     { key:"szechuan", name:"Szechuan", desc:"bold, numbing, layered",
       pantry:["Sichuan peppercorns","Pixian doubanjiang","Chinkiang black vinegar","light & dark soy","Shaoxing wine","chili crisp","dried Tianjin chilies","toasted sesame oil","fermented black beans","ginger","garlic","scallions","white pepper","cornstarch","peanuts","jasmine rice","fresh chilies","cilantro","bok choy"],
       dishes:[
         {name:"Mapo tofu", base:"ground", p:32, f:6, steps:[
-          "Bloom 1 tbsp doubanjiang and a pinch of crushed Sichuan peppercorn in hot oil with garlic and ginger until red and fragrant.",
-          "Add thawed ground pork, a splash of Shaoxing, soy, and stock. Slide in cubed silken tofu; simmer 5 min, thicken with a cornstarch slurry.",
-          "Finish with scallion, chili crisp, and ground toasted Sichuan peppercorn. Over rice."],
+          "In 2 tbsp hot oil, bloom <b>1 tbsp doubanjiang</b> and ½ tsp crushed Sichuan peppercorn with 2 cloves garlic and 1 tbsp ginger until red and fragrant, ~1 min.",
+          "Add <b>1 thawed pack ground pork</b> (~1½ cups), 1 tbsp Shaoxing, 1 tbsp soy, and ¾ cup stock. Slide in <b>14 oz cubed silken tofu</b>; simmer 5 min, then thicken with 1 tbsp cornstarch stirred into 2 tbsp water.",
+          "Finish with scallion, 1 tbsp chili crisp, and a pinch of ground toasted peppercorn. Over rice."],
           greens:"Wilt chopped bok choy or pea shoots in at the end; or a side of garlic gai lan."},
         {name:"Twice-cooked pork", base:"pork", p:28, f:6, steps:[
-          "Crisp thawed pork hard in a dry hot wok until the edges char.",
-          "Add doubanjiang, fermented black beans, garlic, and a generous handful of bok choy or leek; toss 2 min.",
-          "Deglaze with Shaoxing and a touch of dark soy and sugar; glaze and serve over rice."],
+          "Crisp <b>1 thawed pack pork</b> (~2 cups) in a dry hot wok until the edges char, 4–5 min.",
+          "Add <b>1 tbsp doubanjiang</b>, 1 tbsp fermented black beans, 2 cloves garlic, and <b>2 cups bok choy or leek</b>; toss 2 min.",
+          "Deglaze with 1 tbsp Shaoxing, 2 tsp dark soy, and 1 tsp sugar; glaze and serve over rice."],
           greens:"Pile in leek, gai lan, or cabbage and let it char with the pork."},
         {name:"Kung pao shrimp", base:"shrimp", p:31, f:6, steps:[
-          "Thaw shrimp under cool water. Stir-fry dried chilies and Sichuan peppercorn in oil briefly, then the shrimp 2 min.",
-          "Add garlic, ginger, scallion whites, and a sauce of soy, black vinegar, sugar, and cornstarch.",
-          "Toss in peanuts off the heat; finish with scallion greens."],
+          "In 2 tbsp oil, stir-fry <b>6–8 dried chilies</b> and ½ tsp Sichuan peppercorn briefly, then <b>~½ lb thawed shrimp</b>, 2 min.",
+          "Add 2 cloves garlic, 1 tbsp ginger, scallion whites, and a sauce of 1 tbsp soy, 1 tbsp black vinegar, 2 tsp sugar, and 1 tsp cornstarch.",
+          "Off the heat, toss in ¼ cup peanuts; finish with scallion greens."],
           greens:"Add diced celery and green pepper with the aromatics; smashed cucumber alongside."}
       ]},
     { key:"mexican", name:"Mexican", desc:"bright, smoky, fresh",
       pantry:["Dried guajillo/ancho chilies","chipotle in adobo","Mexican oregano","cumin","good corn tortillas","white onion","limes","cilantro","cotija or queso fresco","crema","tomatillos","avocado","garlic","black beans","fresh serrano","smoked paprika","pickled onions"],
       dishes:[
         {name:"Carnitas tacos", base:"pork", p:30, f:9, steps:[
-          "Crisp thawed pork hard under the broiler or in a dry pan until the edges crackle.",
-          "Squeeze over orange and lime, season with salt and a pinch of cumin.",
-          "Warm corn tortillas over the flame; build with raw white onion, cilantro, salsa, pickled onion."],
+          "Crisp <b>1 thawed pack pork</b> (~2 cups) under the broiler or in a dry pan until the edges crackle, 5–6 min.",
+          "Squeeze over juice of <b>½ orange and 1 lime</b>; season with salt and ¼ tsp cumin.",
+          "Warm <b>6–8 corn tortillas</b> over the flame; build with white onion, cilantro, salsa, and pickled onion."],
           greens:"Top with a lime-cabbage slaw; cilantro by the handful."},
         {name:"Barbacoa bowl", base:"chuck", p:36, f:15, steps:[
-          "Warm thawed shredded chuck with a little chipotle in adobo and its braising liquid.",
-          "Build over rice and black beans with avocado, cotija, crema, and pickled onion.",
+          "Warm <b>1 thawed pack chuck</b> (~2 cups) with <b>1–2 tsp chipotle in adobo</b> and ¼ cup of its braising liquid.",
+          "Build over <b>1½ cups rice and 1 cup black beans</b> with ½ avocado, cotija, crema, and pickled onion.",
           "Finish with cilantro and a squeeze of lime."],
           greens:"Pile on shredded romaine or cabbage; sautéed kale underneath."},
         {name:"Camarones a la diabla", base:"shrimp", p:28, f:7, steps:[
-          "Blend rehydrated guajillo and chipotle with garlic and a little tomato into a smooth salsa.",
-          "Thaw shrimp, sear 1 min, add the salsa and simmer 2–3 min until coated.",
+          "Blend <b>3 rehydrated guajillos + 1 chipotle</b> with 1 garlic clove and ½ cup tomato into a smooth salsa.",
+          "Sear <b>~½ lb thawed shrimp</b> 1 min, add the salsa, and simmer 2–3 min until coated.",
           "Serve with rice and warm tortillas; lime and cilantro to finish."],
           greens:"A cabbage-lime slaw alongside, or grilled zucchini. Black beans for fiber."}
       ]},
@@ -418,36 +420,36 @@
       pantry:["San Marzano tomatoes","good olive oil","Parmigiano-Reggiano (save rinds)","guanciale or pancetta","dried pasta (incl. whole-wheat)","Calabrian chili paste","anchovies","capers","garlic","basil","oregano","red wine","cannellini beans","polenta","lemon","flat-leaf parsley","fresh mozzarella"],
       dishes:[
         {name:"Pork sugo & rigatoni", base:"pork", p:30, f:8, steps:[
-          "Warm thawed pork in hand-crushed San Marzanos with garlic, a spoon of Calabrian chili, a parmesan rind, and olive oil; simmer 10–15 min.",
-          "Toss with al dente rigatoni (whole-wheat for more fiber) and a ladle of pasta water.",
+          "Warm <b>1 thawed pack pork</b> (~2 cups) in <b>1 can (14 oz) hand-crushed San Marzanos</b> with 2 cloves garlic, 1 tsp Calabrian chili, a parm rind, and 2 tbsp olive oil; simmer 10–15 min.",
+          "Toss with <b>8 oz cooked rigatoni</b> (whole-wheat for more fiber) and a ladle (~¼ cup) of pasta water.",
           "Finish with Parmigiano and torn basil."],
           greens:"Stir a few handfuls of escarole or kale into the sauce as it simmers."},
         {name:"Chuck ragù over polenta", base:"chuck", p:32, f:8, steps:[
-          "Warm thawed chuck in its braising liquid loosened with a little red wine and tomato.",
-          "Cook soft polenta with butter and Parmigiano.",
-          "Spoon the ragù over polenta; parsley and a thread of olive oil."],
+          "Warm <b>1 thawed pack chuck</b> (~2 cups) in its braising liquid loosened with ¼ cup red wine and ¼ cup tomato.",
+          "Cook <b>1 cup polenta</b> per package with 2 tbsp butter and ¼ cup Parmigiano.",
+          "Spoon the ragù over the polenta; finish with parsley and a thread of olive oil."],
           greens:"Fold cavolo nero into the ragù, or broccoli rabe on the side."},
         {name:"Shrimp & cannellini", base:"shrimp", p:34, f:13, steps:[
-          "Warm cannellini in olive oil with garlic, anchovy, and Calabrian chili until creamy.",
-          "Sear thawed shrimp 2 min; fold into the beans.",
-          "Lemon, parsley, good oil; serve with grilled bread."],
+          "Warm <b>1 can (15 oz) cannellini</b> in 2 tbsp olive oil with 2 cloves garlic, 1 anchovy, and 1 tsp Calabrian chili until creamy.",
+          "Sear <b>~½ lb thawed shrimp</b> 2 min; fold into the beans.",
+          "Lemon, parsley, and good oil; serve with grilled bread."],
           greens:"Wilt a big handful of spinach or escarole into the beans."}
       ]},
     { key:"spanish", name:"Spanish", desc:"smoky paprika, sherry, garlic",
       pantry:["Pimentón (sweet & hot)","saffron","sherry vinegar","Marcona almonds","manchego","good olive oil","piquillo peppers","chickpeas","fino/manzanilla sherry","garlic","bomba rice","canned tomato","parsley","cured chorizo","green olives"],
       dishes:[
         {name:"Gambas al ajillo", base:"shrimp", p:28, f:6, steps:[
-          "Warm sliced garlic and a dried chili in plenty of olive oil until just golden.",
-          "Add thawed shrimp, a pinch of pimentón, a splash of fino; cook 2–3 min.",
+          "Warm <b>4 sliced garlic cloves</b> and 1 dried chili in <b>⅓ cup olive oil</b> until just golden.",
+          "Add <b>~½ lb thawed shrimp</b>, ½ tsp pimentón, and 2 tbsp fino sherry; cook 2–3 min.",
           "Parsley and lemon; serve with crusty bread."],
           greens:"Throw spinach into the pan at the end (espinacas), or grilled asparagus alongside."},
         {name:"Ropa vieja-style chuck", base:"chuck", p:32, f:7, steps:[
-          "Warm thawed shredded chuck with piquillo strips, tomato, garlic, and pimentón.",
-          "Loosen with a splash of sherry; simmer 5 min.",
+          "Warm <b>1 thawed pack chuck</b> (~2 cups) with ½ cup piquillo strips, ½ cup tomato, 2 cloves garlic, and 1 tsp pimentón.",
+          "Loosen with 2 tbsp sherry; simmer 5 min.",
           "Over bomba rice with green olives and parsley."],
           greens:"Sautéed chard alongside, or a sharp green salad."},
         {name:"Pork & chickpea guiso", base:"pork", p:34, f:12, steps:[
-          "Warm thawed pork with chickpeas, tomato, garlic, smoked paprika, and a little stock.",
+          "Warm <b>1 thawed pack pork</b> (~2 cups) with <b>1 can (15 oz) chickpeas</b>, ½ cup tomato, 2 cloves garlic, 1 tsp smoked paprika, and ½ cup stock.",
           "Simmer 10 min until thick.",
           "Parsley and a drizzle of olive oil; bread alongside."],
           greens:"Stir spinach or chard in at the end until just wilted."}
@@ -456,37 +458,37 @@
       pantry:["Red & green curry paste","full-fat coconut milk","fish sauce","palm sugar","limes","Thai basil","cilantro","jasmine rice","rice noodles","bird's-eye chilies","galangal","lemongrass","makrut lime leaves","tamarind","roasted peanuts","shallots","garlic"],
       dishes:[
         {name:"Green curry chicken", base:"chicken", p:28, f:6, steps:[
-          "Fry 2 tbsp green curry paste in thick coconut cream until it splits and smells fragrant.",
-          "Add the rest of the coconut milk, fish sauce, a little palm sugar, and thawed sliced thigh; simmer 6–8 min.",
-          "Off heat: lime and torn Thai basil. Over jasmine rice."],
+          "Fry <b>2 tbsp green curry paste</b> in ½ cup thick coconut cream until it splits and smells fragrant, ~2 min.",
+          "Add the rest of <b>1 can (13.5 oz) coconut milk</b>, 1 tbsp fish sauce, 1 tsp palm sugar, and <b>1 thawed pack chicken</b> (~2 cups) sliced; simmer 6–8 min.",
+          "Off the heat: lime and torn Thai basil. Over jasmine rice."],
           greens:"Simmer in Thai eggplant and long beans; a fist of Thai basil to finish."},
         {name:"Pork larb", base:"ground", p:27, f:7, steps:[
-          "Crisp thawed ground pork in a hot dry pan until cooked through and a little browned.",
-          "Toss off heat with fish sauce, lime, sugar, shallot, chili, and toasted-rice powder if you have it.",
+          "Crisp <b>1 thawed pack ground pork</b> (~1½ cups) in a hot dry pan until browned, 4–5 min.",
+          "Off the heat, toss with <b>1½ tbsp fish sauce</b>, juice of 1 lime, 1 tsp sugar, 1 sliced shallot, 1 chopped chili, and 1 tbsp toasted-rice powder if you have it.",
           "Pile into lettuce cups with mint and cilantro."],
           greens:"Lettuce cups, cucumber, long beans, and herbs by the fistful — pile it on."},
         {name:"Tamarind shrimp stir-fry", base:"shrimp", p:31, f:6, steps:[
-          "Whisk tamarind, fish sauce, and palm sugar into a quick sauce.",
-          "Sear thawed shrimp with garlic and chili 2 min; add the sauce to glaze.",
-          "Finish with peanuts and cilantro; over rice or noodles."],
+          "Whisk <b>2 tbsp tamarind</b>, 1 tbsp fish sauce, and 1 tbsp palm sugar into a quick sauce.",
+          "Sear <b>~½ lb thawed shrimp</b> with 2 cloves garlic and 1 chili 2 min; add the sauce to glaze.",
+          "Finish with ¼ cup peanuts and cilantro; over rice or noodles."],
           greens:"Toss in Chinese broccoli or long beans; herbs to finish."}
       ]},
     { key:"greek", name:"Greek / Mediterranean", desc:"olive oil, lemon, herbs",
       pantry:["Good olive oil","dried oregano","lemons","feta in brine","kalamata olives","Greek yogurt","garlic","cucumbers","ripe tomatoes","red onion","pita","chickpeas","tahini","sumac","fresh dill and mint","capers","red wine vinegar"],
       dishes:[
         {name:"Lemon-oregano chicken bowl", base:"chicken", p:32, f:7, steps:[
-          "Char thawed thigh in a hot pan with olive oil; finish with lemon and oregano.",
-          "Build with cucumber, tomato, red onion, kalamata, feta, and tzatziki (yogurt, grated cucumber, garlic, dill).",
+          "Char <b>1 thawed pack chicken</b> (~2 cups) in 1 tbsp olive oil; finish with juice of ½ lemon and 1 tsp oregano.",
+          "Build with cucumber, tomato, red onion, kalamata, feta, and tzatziki (<b>½ cup yogurt</b>, ¼ grated cucumber, 1 garlic clove, dill).",
           "Warm pita alongside; add a scoop of chickpeas for fiber."],
           greens:"A pile of dressed arugula, or sautéed horta (greens) on the side."},
         {name:"Pork gyro plate", base:"pork", p:30, f:8, steps:[
-          "Crisp thawed pork with oregano, garlic, and a little lemon.",
+          "Crisp <b>1 thawed pack pork</b> (~2 cups) with 1 tsp oregano, 2 cloves garlic, and a squeeze of lemon.",
           "Wrap in warm pita with tomato, onion, and tzatziki, or plate over rice.",
           "Sumac and dill to finish."],
           greens:"A big chopped salad — cucumber, tomato, parsley, red onion."},
         {name:"Shrimp saganaki", base:"shrimp", p:33, f:7, steps:[
-          "Simmer tomato with garlic, a pinch of chili, and oregano 5 min.",
-          "Add thawed shrimp and crumbled feta; cook 3 min until just set.",
+          "Simmer <b>1½ cups tomato</b> with 2 cloves garlic, a pinch of chili, and 1 tsp oregano 5 min.",
+          "Add <b>~½ lb thawed shrimp</b> and ½ cup crumbled feta; cook 3 min until just set.",
           "Parsley and lemon; bread to mop."],
           greens:"Wilt spinach into the tomato; horta or a Greek salad alongside."}
       ]},
@@ -494,18 +496,18 @@
       pantry:["Brown/green lentils","chickpeas","white beans","bulgur","freekeh","tahini","cumin","coriander","allspice","cinnamon","sumac","Aleppo pepper","garlic","lemons","flat-leaf parsley","mint","dill","Greek yogurt or labneh","pomegranate molasses","olive oil","pita","tomato paste","pine nuts or walnuts"],
       dishes:[
         {name:"Chicken & green lentils", base:"chicken", p:36, f:15, steps:[
-          "Warm thawed thigh with cumin, coriander, garlic, and lemon.",
-          "Fold into cooked brown or green lentils loosened with olive oil and a little lemon.",
-          "Finish with parsley, mint, a dollop of yogurt, and sumac."],
+          "Warm <b>1 thawed pack chicken</b> (~2 cups) with 1 tsp cumin, ½ tsp coriander, 2 cloves garlic, and juice of ½ lemon.",
+          "Fold into <b>1½ cups cooked brown or green lentils</b> loosened with 2 tbsp olive oil and a squeeze of lemon.",
+          "Finish with parsley, mint, ¼ cup yogurt, and a dusting of sumac."],
           greens:"A big parsley-mint tabbouleh, or a chopped cucumber-tomato salad."},
         {name:"Beef & chickpea yakhni", base:"chuck", p:38, f:18, steps:[
-          "Warm thawed chuck in its liquid with chickpeas, tomato paste, garlic, and a pinch of cinnamon and allspice.",
+          "Warm <b>1 thawed pack chuck</b> (~2 cups) in its liquid with <b>1 can (15 oz) chickpeas</b>, 1 tbsp tomato paste, 2 cloves garlic, and ¼ tsp each cinnamon and allspice.",
           "Simmer 8–10 min until thick.",
-          "Spoon over bulgur or freekeh; parsley and lemon."],
+          "Spoon over <b>1½ cups bulgur or freekeh</b>; parsley and lemon."],
           greens:"Stir spinach or chard into the stew; herb salad alongside."},
         {name:"Shrimp, white bean & tahini", base:"shrimp", p:36, f:15, steps:[
-          "Warm white beans with garlic, cumin, olive oil, a spoon of tahini, and lemon until creamy.",
-          "Sear thawed shrimp 2 min; fold in.",
+          "Warm <b>1 can (15 oz) white beans</b> with 2 cloves garlic, 1 tsp cumin, 2 tbsp olive oil, 1 tbsp tahini, and juice of ½ lemon until creamy.",
+          "Sear <b>~½ lb thawed shrimp</b> 2 min; fold in.",
           "A big handful of parsley and dill; sumac and lemon to finish."],
           greens:"Fold spinach into the beans; serve with a tomato-herb salad."}
       ]},
@@ -513,17 +515,17 @@
       pantry:["Dijon and grainy mustard","good butter","shallots","dry white wine","Cognac","fresh thyme and tarragon","crème fraîche","Gruyère","lentils du Puy","white wine vinegar","capers","cornichons","garlic","bay"],
       dishes:[
         {name:"Chicken in mustard pan sauce", base:"chicken", p:36, f:15, steps:[
-          "Sweat minced shallot in butter, deglaze with white wine, reduce by half.",
-          "Whisk in Dijon and a spoon of crème fraîche; add thyme. Warm thawed thigh 3–4 min.",
-          "Plate over lentils du Puy (the fiber move) or mashed potato."],
+          "Sweat <b>1 minced shallot</b> in 1 tbsp butter, deglaze with ⅓ cup white wine, and reduce by half.",
+          "Whisk in <b>1 tbsp Dijon</b> and 2 tbsp crème fraîche; add thyme. Warm <b>1 thawed pack chicken</b> (~2 cups) 3–4 min.",
+          "Plate over <b>1½ cups lentils du Puy</b> (the fiber move) or mashed potato."],
           greens:"A frisée or green salad, or buttered haricots verts."},
         {name:"Beef chuck bourguignon-style", base:"chuck", p:33, f:8, steps:[
-          "Warm thawed chuck in its braising liquid reduced with red wine, a little tomato, and thyme.",
-          "Add sautéed mushrooms and pearl onions if you have them.",
+          "Warm <b>1 thawed pack chuck</b> (~2 cups) in its braising liquid reduced with ¼ cup red wine, 2 tbsp tomato, and thyme.",
+          "Add 1 cup sautéed mushrooms and pearl onions if you have them.",
           "Over buttered noodles or mashed potato; parsley."],
           greens:"Sautéed spinach or haricots verts to cut the richness."},
         {name:"Pork rillettes toast", base:"pork", p:24, f:6, steps:[
-          "Mash thawed pork with a little soft butter, cracked pepper, and thyme until spreadable.",
+          "Mash <b>1 thawed pack pork</b> (~2 cups) with 2 tbsp soft butter, cracked pepper, and 1 tsp thyme until spreadable.",
           "Spread thick on toasted bread (whole-grain for fiber).",
           "Serve with cornichons and grainy mustard; a quick lunch or starter."],
           greens:"A sharp frisée-and-herb salad alongside the cornichons."}
@@ -533,6 +535,8 @@
   const $ = s => document.querySelector(s);
   const cvar = k => "var(--"+k+")";
   const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  // steps may contain trusted <b> markup; render without escaping
+  const stepHTML = s => s;
 
   let activeBase="all";
   const chipsEl=$("#chips");
@@ -568,7 +572,7 @@
         '<div class="recipe-top"><h3 class="recipe-name">'+esc(d.name)+'</h3>'+
         '<span class="base-tag"><span class="dot"></span>'+esc(BASE_LABEL[d.base])+'</span></div>'+
         '<div class="macros">&#8776; <b>'+d.p+'g</b> protein <span class="sep">·</span> <b>'+d.f+'g</b> fiber <span class="sep">/ serving</span></div>'+
-        '<ol class="steps"><li>'+d.steps.map(esc).join('</li><li>')+'</li></ol>'+
+        '<ol class="steps"><li>'+d.steps.map(stepHTML).join('</li><li>')+'</li></ol>'+
         '<div class="greens"><span class="lbl ml">Greens</span><span class="txt">'+esc(d.greens)+'</span></div>';
       grid.appendChild(card);
     });
