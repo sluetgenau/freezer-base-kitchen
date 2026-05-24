@@ -113,7 +113,7 @@
   .recipes-grid{display:grid; gap:12px; grid-template-columns:1fr;}
   @media(min-width:760px){.recipes-grid{grid-template-columns:1fr 1fr 1fr;}}
   .recipe{background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
-    padding:17px 17px 16px; display:flex; flex-direction:column; gap:12px;}
+    padding:17px 17px 16px; display:flex; flex-direction:column; gap:11px;}
   .recipe.dim-out{display:none;}
   .recipe-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
   .recipe-name{font-family:var(--serif); font-size:19px; font-weight:600; line-height:1.15;}
@@ -121,11 +121,15 @@
     padding:4px 9px; white-space:nowrap; display:inline-flex; align-items:center; gap:6px;
     font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700;}
   .base-tag .dot{width:6px;height:6px;border-radius:2px;background:var(--c);}
+  .macros{display:flex; gap:7px; align-items:center; font-size:12px; color:var(--mute);
+    font-variant-numeric:tabular-nums; letter-spacing:.01em; margin-top:-2px;}
+  .macros b{color:var(--accent-hi); font-weight:700;}
+  .macros .sep{opacity:.5;}
   ol.steps{margin:0; padding:0; list-style:none; counter-reset:s; display:flex; flex-direction:column; gap:10px;}
   ol.steps li{position:relative; padding-left:24px; color:var(--dim); font-size:14.5px; line-height:1.5; counter-increment:s;}
   ol.steps li::before{content:counter(s) "."; position:absolute; left:0; top:0; color:var(--accent);
     font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;}
-  .greens{margin-top:2px; padding-top:12px; border-top:1px solid var(--line);
+  .greens{margin-top:1px; padding-top:11px; border-top:1px solid var(--line);
     display:flex; gap:9px; align-items:baseline;}
   .greens .lbl{color:var(--accent); flex:0 0 auto;}
   .greens .txt{color:var(--dim); font-size:13.5px; line-height:1.45;}
@@ -139,7 +143,7 @@
   details.matrix>summary::after{content:"+"; color:var(--accent); font-size:22px; font-weight:300; margin-left:10px;}
   details.matrix[open]>summary::after{content:"\2212";}
   .matrix-scroll{overflow-x:auto; border-top:1px solid var(--line);}
-  table.mx{border-collapse:collapse; width:100%; min-width:580px; font-size:13px;}
+  table.mx{border-collapse:collapse; width:100%; min-width:720px; font-size:13px;}
   table.mx th, table.mx td{padding:10px 12px; text-align:left; border-top:1px solid var(--line); vertical-align:top;}
   table.mx thead th{background:var(--panel-2); color:var(--mute); font-weight:700; border-top:none;
     font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;}
@@ -209,8 +213,8 @@
 <header class="hero">
   <div class="kicker ml">Kitchen Reference</div>
   <h1 class="title">The Freezer&#8209;Base <em>Kitchen</em></h1>
-  <p class="ethos">Five protein bases. Seven cuisines. Twenty-one dishes.</p>
-  <p class="premise">Five neutral protein bases from one shopping run, cooked in a single afternoon and frozen flat. Each of the 21 dishes pulls <b>one thawed base</b>, a few pantry staples, and a green — most are ready in 10–15 minutes.</p>
+  <p class="ethos">Five protein bases. Eight cuisines. Twenty-four dishes.</p>
+  <p class="premise">Five neutral protein bases from one shopping run, cooked in a single afternoon and frozen flat. Each of the 24 dishes pulls <b>one thawed base</b>, a few pantry staples, and a green — most are ready in 10–15 minutes.</p>
   <div class="hero-rule"></div>
 </header>
 
@@ -227,7 +231,7 @@
 
   <section id="recipes">
     <div class="sec-head"><span class="sec-num">I</span><h2>The Dishes</h2></div>
-    <p class="sec-sub">Tap a protein above to see every dish it makes. Each pulls a thawed base, a handful of pantry staples, and a green.</p>
+    <p class="sec-sub">Tap a protein above to see every dish it makes. Each card shows rough per-serving protein and fiber — most land at <b>25–35g protein</b>; lean on the bean, lentil, and grain dishes (Levantine, Mexican bowls, French lentils) to reach <b>~30g fiber across the day</b>.</p>
     <div id="recipeMount"></div>
   </section>
 
@@ -260,14 +264,14 @@
 
   <section id="market">
     <div class="sec-head"><span class="sec-num">VI</span><h2>The Weekly Market Run</h2></div>
-    <p class="sec-sub">The bases and pantries are done. Weekly, refresh produce, herbs, and greens.</p>
+    <p class="sec-sub">The bases and pantries are done. Weekly, refresh produce, herbs, greens, and a tin or two of beans.</p>
     <div class="market">
       <p class="lead">Shop brightness, not recipes.</p>
       <div class="market-grid">
         <div class="mcat"><div class="h ml">Leafy greens</div><div class="d">A bunch or two every trip. <em>Asian market — gai lan, bok choy, pea shoots, yu choy, long beans. Whole Foods — kale, chard, escarole, spinach, arugula.</em></div></div>
+        <div class="mcat"><div class="h ml">Fiber staples</div><div class="d">Keep stocked: lentils, chickpeas, white &amp; black beans, bulgur. <em>The fiber backbone — cheap, shelf-stable, in half the dishes.</em></div></div>
         <div class="mcat"><div class="h ml">Fresh herbs</div><div class="d">Cilantro, basil, dill, mint, parsley, scallions.</div></div>
         <div class="mcat"><div class="h ml">Acid &amp; crunch</div><div class="d">Citrus, cucumber, radish, cabbage, in-season tomato.</div></div>
-        <div class="mcat"><div class="h ml">One fresh protein</div><div class="d">Salmon, eggs, or extra shrimp.</div></div>
       </div>
       <p class="foot">Asian and specialty markets handle shelf-stable pantry restocks occasionally — not weekly.</p>
     </div>
@@ -277,7 +281,7 @@
 
 <footer>
   <div class="fr"></div>
-  <p class="sm">Five bases · Seven cuisines · Twenty-one dishes</p>
+  <p class="sm">Five bases · Eight cuisines · Twenty-four dishes</p>
 </footer>
 
 <button id="top" aria-label="Back to top">↑</button>
@@ -319,21 +323,22 @@
     "Portion and <b>vacuum-seal everything flat</b> with a little cooking liquid or oil. Label and date. Shrimp stays in its bag."
   ];
 
+  // protein (p) and fiber (f) are approximate grams per serving
   const CUISINES = [
     { key:"szechuan", name:"Szechuan", desc:"bold, numbing, layered",
       pantry:["Sichuan peppercorns","Pixian doubanjiang","Chinkiang black vinegar","light & dark soy","Shaoxing wine","chili crisp","dried Tianjin chilies","toasted sesame oil","fermented black beans","ginger","garlic","scallions","white pepper","cornstarch","peanuts","jasmine rice","fresh chilies","cilantro","bok choy"],
       dishes:[
-        {name:"Mapo tofu", base:"ground", steps:[
+        {name:"Mapo tofu", base:"ground", p:32, f:6, steps:[
           "Bloom 1 tbsp doubanjiang and a pinch of crushed Sichuan peppercorn in hot oil with garlic and ginger until red and fragrant.",
           "Add thawed ground pork, a splash of Shaoxing, soy, and stock. Slide in cubed silken tofu; simmer 5 min, thicken with a cornstarch slurry.",
           "Finish with scallion, chili crisp, and ground toasted Sichuan peppercorn. Over rice."],
           greens:"Wilt chopped bok choy or pea shoots in at the end; or a side of garlic gai lan."},
-        {name:"Twice-cooked pork", base:"pork", steps:[
+        {name:"Twice-cooked pork", base:"pork", p:28, f:6, steps:[
           "Crisp thawed pork hard in a dry hot wok until the edges char.",
           "Add doubanjiang, fermented black beans, garlic, and a generous handful of bok choy or leek; toss 2 min.",
           "Deglaze with Shaoxing and a touch of dark soy and sugar; glaze and serve over rice."],
           greens:"Pile in leek, gai lan, or cabbage and let it char with the pork."},
-        {name:"Kung pao shrimp", base:"shrimp", steps:[
+        {name:"Kung pao shrimp", base:"shrimp", p:31, f:6, steps:[
           "Thaw shrimp under cool water. Stir-fry dried chilies and Sichuan peppercorn in oil briefly, then the shrimp 2 min.",
           "Add garlic, ginger, scallion whites, and a sauce of soy, black vinegar, sugar, and cornstarch.",
           "Toss in peanuts off the heat; finish with scallion greens."],
@@ -342,36 +347,36 @@
     { key:"mexican", name:"Mexican", desc:"bright, smoky, fresh",
       pantry:["Dried guajillo/ancho chilies","chipotle in adobo","Mexican oregano","cumin","good corn tortillas","white onion","limes","cilantro","cotija or queso fresco","crema","tomatillos","avocado","garlic","black beans","fresh serrano","smoked paprika","pickled onions"],
       dishes:[
-        {name:"Carnitas tacos", base:"pork", steps:[
+        {name:"Carnitas tacos", base:"pork", p:30, f:9, steps:[
           "Crisp thawed pork hard under the broiler or in a dry pan until the edges crackle.",
           "Squeeze over orange and lime, season with salt and a pinch of cumin.",
           "Warm corn tortillas over the flame; build with raw white onion, cilantro, salsa, pickled onion."],
           greens:"Top with a lime-cabbage slaw; cilantro by the handful."},
-        {name:"Barbacoa bowl", base:"chuck", steps:[
+        {name:"Barbacoa bowl", base:"chuck", p:36, f:15, steps:[
           "Warm thawed shredded chuck with a little chipotle in adobo and its braising liquid.",
           "Build over rice and black beans with avocado, cotija, crema, and pickled onion.",
           "Finish with cilantro and a squeeze of lime."],
           greens:"Pile on shredded romaine or cabbage; sautéed kale underneath."},
-        {name:"Camarones a la diabla", base:"shrimp", steps:[
+        {name:"Camarones a la diabla", base:"shrimp", p:28, f:7, steps:[
           "Blend rehydrated guajillo and chipotle with garlic and a little tomato into a smooth salsa.",
           "Thaw shrimp, sear 1 min, add the salsa and simmer 2–3 min until coated.",
           "Serve with rice and warm tortillas; lime and cilantro to finish."],
-          greens:"A cabbage-lime slaw alongside, or grilled zucchini."}
+          greens:"A cabbage-lime slaw alongside, or grilled zucchini. Black beans for fiber."}
       ]},
     { key:"italian", name:"Italian", desc:"restrained, ingredient-driven",
-      pantry:["San Marzano tomatoes","good olive oil","Parmigiano-Reggiano (save rinds)","guanciale or pancetta","dried pasta","Calabrian chili paste","anchovies","capers","garlic","basil","oregano","red wine","cannellini beans","polenta","lemon","flat-leaf parsley","fresh mozzarella"],
+      pantry:["San Marzano tomatoes","good olive oil","Parmigiano-Reggiano (save rinds)","guanciale or pancetta","dried pasta (incl. whole-wheat)","Calabrian chili paste","anchovies","capers","garlic","basil","oregano","red wine","cannellini beans","polenta","lemon","flat-leaf parsley","fresh mozzarella"],
       dishes:[
-        {name:"Pork sugo & rigatoni", base:"pork", steps:[
+        {name:"Pork sugo & rigatoni", base:"pork", p:30, f:8, steps:[
           "Warm thawed pork in hand-crushed San Marzanos with garlic, a spoon of Calabrian chili, a parmesan rind, and olive oil; simmer 10–15 min.",
-          "Toss with al dente rigatoni and a ladle of pasta water.",
+          "Toss with al dente rigatoni (whole-wheat for more fiber) and a ladle of pasta water.",
           "Finish with Parmigiano and torn basil."],
           greens:"Stir a few handfuls of escarole or kale into the sauce as it simmers."},
-        {name:"Chuck ragù over polenta", base:"chuck", steps:[
+        {name:"Chuck ragù over polenta", base:"chuck", p:32, f:8, steps:[
           "Warm thawed chuck in its braising liquid loosened with a little red wine and tomato.",
           "Cook soft polenta with butter and Parmigiano.",
           "Spoon the ragù over polenta; parsley and a thread of olive oil."],
           greens:"Fold cavolo nero into the ragù, or broccoli rabe on the side."},
-        {name:"Shrimp & cannellini", base:"shrimp", steps:[
+        {name:"Shrimp & cannellini", base:"shrimp", p:34, f:13, steps:[
           "Warm cannellini in olive oil with garlic, anchovy, and Calabrian chili until creamy.",
           "Sear thawed shrimp 2 min; fold into the beans.",
           "Lemon, parsley, good oil; serve with grilled bread."],
@@ -380,17 +385,17 @@
     { key:"spanish", name:"Spanish", desc:"smoky paprika, sherry, garlic",
       pantry:["Pimentón (sweet & hot)","saffron","sherry vinegar","Marcona almonds","manchego","good olive oil","piquillo peppers","chickpeas","fino/manzanilla sherry","garlic","bomba rice","canned tomato","parsley","cured chorizo","green olives"],
       dishes:[
-        {name:"Gambas al ajillo", base:"shrimp", steps:[
+        {name:"Gambas al ajillo", base:"shrimp", p:28, f:6, steps:[
           "Warm sliced garlic and a dried chili in plenty of olive oil until just golden.",
           "Add thawed shrimp, a pinch of pimentón, a splash of fino; cook 2–3 min.",
           "Parsley and lemon; serve with crusty bread."],
           greens:"Throw spinach into the pan at the end (espinacas), or grilled asparagus alongside."},
-        {name:"Ropa vieja-style chuck", base:"chuck", steps:[
+        {name:"Ropa vieja-style chuck", base:"chuck", p:32, f:7, steps:[
           "Warm thawed shredded chuck with piquillo strips, tomato, garlic, and pimentón.",
           "Loosen with a splash of sherry; simmer 5 min.",
           "Over bomba rice with green olives and parsley."],
           greens:"Sautéed chard alongside, or a sharp green salad."},
-        {name:"Pork & chickpea guiso", base:"pork", steps:[
+        {name:"Pork & chickpea guiso", base:"pork", p:34, f:12, steps:[
           "Warm thawed pork with chickpeas, tomato, garlic, smoked paprika, and a little stock.",
           "Simmer 10 min until thick.",
           "Parsley and a drizzle of olive oil; bread alongside."],
@@ -399,17 +404,17 @@
     { key:"thai", name:"Thai", desc:"hot, sour, sweet, herbal",
       pantry:["Red & green curry paste","full-fat coconut milk","fish sauce","palm sugar","limes","Thai basil","cilantro","jasmine rice","rice noodles","bird's-eye chilies","galangal","lemongrass","makrut lime leaves","tamarind","roasted peanuts","shallots","garlic"],
       dishes:[
-        {name:"Green curry chicken", base:"chicken", steps:[
+        {name:"Green curry chicken", base:"chicken", p:28, f:6, steps:[
           "Fry 2 tbsp green curry paste in thick coconut cream until it splits and smells fragrant.",
           "Add the rest of the coconut milk, fish sauce, a little palm sugar, and thawed sliced thigh; simmer 6–8 min.",
           "Off heat: lime and torn Thai basil. Over jasmine rice."],
           greens:"Simmer in Thai eggplant and long beans; a fist of Thai basil to finish."},
-        {name:"Pork larb", base:"ground", steps:[
+        {name:"Pork larb", base:"ground", p:27, f:7, steps:[
           "Crisp thawed ground pork in a hot dry pan until cooked through and a little browned.",
           "Toss off heat with fish sauce, lime, sugar, shallot, chili, and toasted-rice powder if you have it.",
           "Pile into lettuce cups with mint and cilantro."],
           greens:"Lettuce cups, cucumber, long beans, and herbs by the fistful — pile it on."},
-        {name:"Tamarind shrimp stir-fry", base:"shrimp", steps:[
+        {name:"Tamarind shrimp stir-fry", base:"shrimp", p:31, f:6, steps:[
           "Whisk tamarind, fish sauce, and palm sugar into a quick sauce.",
           "Sear thawed shrimp with garlic and chili 2 min; add the sauce to glaze.",
           "Finish with peanuts and cilantro; over rice or noodles."],
@@ -418,38 +423,57 @@
     { key:"greek", name:"Greek / Mediterranean", desc:"olive oil, lemon, herbs",
       pantry:["Good olive oil","dried oregano","lemons","feta in brine","kalamata olives","Greek yogurt","garlic","cucumbers","ripe tomatoes","red onion","pita","chickpeas","tahini","sumac","fresh dill and mint","capers","red wine vinegar"],
       dishes:[
-        {name:"Lemon-oregano chicken bowl", base:"chicken", steps:[
+        {name:"Lemon-oregano chicken bowl", base:"chicken", p:32, f:7, steps:[
           "Char thawed thigh in a hot pan with olive oil; finish with lemon and oregano.",
           "Build with cucumber, tomato, red onion, kalamata, feta, and tzatziki (yogurt, grated cucumber, garlic, dill).",
-          "Warm pita alongside."],
+          "Warm pita alongside; add a scoop of chickpeas for fiber."],
           greens:"A pile of dressed arugula, or sautéed horta (greens) on the side."},
-        {name:"Pork gyro plate", base:"pork", steps:[
+        {name:"Pork gyro plate", base:"pork", p:30, f:8, steps:[
           "Crisp thawed pork with oregano, garlic, and a little lemon.",
           "Wrap in warm pita with tomato, onion, and tzatziki, or plate over rice.",
           "Sumac and dill to finish."],
           greens:"A big chopped salad — cucumber, tomato, parsley, red onion."},
-        {name:"Shrimp saganaki", base:"shrimp", steps:[
+        {name:"Shrimp saganaki", base:"shrimp", p:33, f:7, steps:[
           "Simmer tomato with garlic, a pinch of chili, and oregano 5 min.",
           "Add thawed shrimp and crumbled feta; cook 3 min until just set.",
           "Parsley and lemon; bread to mop."],
           greens:"Wilt spinach into the tomato; horta or a Greek salad alongside."}
       ]},
+    { key:"levantine", name:"Levantine", desc:"garlic, lemon, legumes, herbs",
+      pantry:["Brown/green lentils","chickpeas","white beans","bulgur","freekeh","tahini","cumin","coriander","allspice","cinnamon","sumac","Aleppo pepper","garlic","lemons","flat-leaf parsley","mint","dill","Greek yogurt or labneh","pomegranate molasses","olive oil","pita","tomato paste","pine nuts or walnuts"],
+      dishes:[
+        {name:"Chicken & green lentils", base:"chicken", p:36, f:15, steps:[
+          "Warm thawed thigh with cumin, coriander, garlic, and lemon.",
+          "Fold into cooked brown or green lentils loosened with olive oil and a little lemon.",
+          "Finish with parsley, mint, a dollop of yogurt, and sumac."],
+          greens:"A big parsley-mint tabbouleh, or a chopped cucumber-tomato salad."},
+        {name:"Beef & chickpea yakhni", base:"chuck", p:38, f:18, steps:[
+          "Warm thawed chuck in its liquid with chickpeas, tomato paste, garlic, and a pinch of cinnamon and allspice.",
+          "Simmer 8–10 min until thick.",
+          "Spoon over bulgur or freekeh; parsley and lemon."],
+          greens:"Stir spinach or chard into the stew; herb salad alongside."},
+        {name:"Shrimp, white bean & tahini", base:"shrimp", p:36, f:15, steps:[
+          "Warm white beans with garlic, cumin, olive oil, a spoon of tahini, and lemon until creamy.",
+          "Sear thawed shrimp 2 min; fold in.",
+          "A big handful of parsley and dill; sumac and lemon to finish."],
+          greens:"Fold spinach into the beans; serve with a tomato-herb salad."}
+      ]},
     { key:"french", name:"French", desc:"butter, mustard, wine",
       pantry:["Dijon and grainy mustard","good butter","shallots","dry white wine","Cognac","fresh thyme and tarragon","crème fraîche","Gruyère","lentils du Puy","white wine vinegar","capers","cornichons","garlic","bay"],
       dishes:[
-        {name:"Chicken in mustard pan sauce", base:"chicken", steps:[
+        {name:"Chicken in mustard pan sauce", base:"chicken", p:36, f:15, steps:[
           "Sweat minced shallot in butter, deglaze with white wine, reduce by half.",
           "Whisk in Dijon and a spoon of crème fraîche; add thyme. Warm thawed thigh 3–4 min.",
-          "Plate over lentils du Puy or mashed potato."],
+          "Plate over lentils du Puy (the fiber move) or mashed potato."],
           greens:"A frisée or green salad, or buttered haricots verts."},
-        {name:"Beef chuck bourguignon-style", base:"chuck", steps:[
+        {name:"Beef chuck bourguignon-style", base:"chuck", p:33, f:8, steps:[
           "Warm thawed chuck in its braising liquid reduced with red wine, a little tomato, and thyme.",
           "Add sautéed mushrooms and pearl onions if you have them.",
           "Over buttered noodles or mashed potato; parsley."],
           greens:"Sautéed spinach or haricots verts to cut the richness."},
-        {name:"Pork rillettes toast", base:"pork", steps:[
+        {name:"Pork rillettes toast", base:"pork", p:24, f:6, steps:[
           "Mash thawed pork with a little soft butter, cracked pepper, and thyme until spreadable.",
-          "Spread thick on toasted bread.",
+          "Spread thick on toasted bread (whole-grain for fiber).",
           "Serve with cornichons and grainy mustard; a quick lunch or starter."],
           greens:"A sharp frisée-and-herb salad alongside the cornichons."}
       ]}
@@ -479,17 +503,20 @@
   }
 
   const mount=$("#recipeMount");
+  let TOTAL=0;
   CUISINES.forEach(c=>{
     const block=document.createElement("div");
     block.className="cuisine-block"; block.id="c-"+c.key;
     block.innerHTML='<div class="cuisine-head"><span class="cname">'+esc(c.name)+'</span><span class="cdesc">'+esc(c.desc)+'</span></div>';
     const grid=document.createElement("div"); grid.className="recipes-grid";
     c.dishes.forEach(d=>{
+      TOTAL++;
       const card=document.createElement("article");
       card.className="recipe"; card.dataset.base=d.base; card.style.setProperty("--c",cvar(d.base));
       card.innerHTML=
         '<div class="recipe-top"><h3 class="recipe-name">'+esc(d.name)+'</h3>'+
         '<span class="base-tag"><span class="dot"></span>'+esc(BASE_LABEL[d.base])+'</span></div>'+
+        '<div class="macros">&#8776; <b>'+d.p+'g</b> protein <span class="sep">·</span> <b>'+d.f+'g</b> fiber <span class="sep">/ serving</span></div>'+
         '<ol class="steps"><li>'+d.steps.map(esc).join('</li><li>')+'</li></ol>'+
         '<div class="greens"><span class="lbl ml">Greens</span><span class="txt">'+esc(d.greens)+'</span></div>';
       grid.appendChild(card);
@@ -507,7 +534,7 @@
       });
       block.style.display=v===0?"none":"";
     });
-    countEl.textContent = activeBase==="all" ? "· all 21" : "· "+shown+" with "+BASE_LABEL[activeBase].toLowerCase();
+    countEl.textContent = activeBase==="all" ? "· all "+TOTAL : "· "+shown+" with "+BASE_LABEL[activeBase].toLowerCase();
   }
 
   const baseMount=$("#baseMount");
