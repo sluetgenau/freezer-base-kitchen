@@ -213,8 +213,8 @@
 <header class="hero">
   <div class="kicker ml">Kitchen Reference</div>
   <h1 class="title">The Freezer&#8209;Base <em>Kitchen</em></h1>
-  <p class="ethos">Five protein bases. Eight cuisines. Twenty-four dishes.</p>
-  <p class="premise">Five neutral protein bases from one shopping run, cooked in a single afternoon and frozen flat. Each of the 24 dishes pulls <b>one thawed base</b>, a few pantry staples, and a green — most are ready in 10–15 minutes.</p>
+  <p class="ethos">Five protein bases. Nine cuisines. Twenty-nine dishes.</p>
+  <p class="premise">Five neutral protein bases from one shopping run, cooked in a single afternoon and frozen flat. Each of the 29 dishes pulls <b>one thawed base</b>, a few pantry staples, and a green — most are ready in 10–15 minutes.</p>
   <div class="hero-rule"></div>
 </header>
 
@@ -231,7 +231,7 @@
 
   <section id="recipes">
     <div class="sec-head"><span class="sec-num">I</span><h2>The Dishes</h2></div>
-    <p class="sec-sub">Tap a protein above to see every dish it makes. Each card shows rough per-serving protein and fiber — most land at <b>25–35g protein</b>; lean on the bean, lentil, and grain dishes (Levantine, Mexican bowls, French lentils) to reach <b>~30g fiber across the day</b>.</p>
+    <p class="sec-sub">Tap a protein above to see every dish it makes. Each card shows rough per-serving protein and fiber — most land at <b>25–35g protein</b>; lean on the bean, lentil, and grain dishes (Fresh Bowls, Levantine, Mexican bowls, French lentils) to reach <b>~30g fiber across the day</b>.</p>
     <div id="recipeMount"></div>
   </section>
 
@@ -247,14 +247,36 @@
     <div class="timeline" id="cookMount"></div>
   </section>
 
+  <section id="backbone">
+    <div class="sec-head"><span class="sec-num">IV</span><h2>Shared Backbone</h2></div>
+    <p class="sec-sub">Cross-utilization is the point. Five bases already feed every cuisine; a small core of staples runs through most dishes. <b>Stock the backbone deep</b> — then each cuisine needs only a few specialty accents, and almost nothing goes to waste.</p>
+    <div class="market">
+      <p class="lead">Buy the core deep. Buy the accents as you go.</p>
+      <div class="market-grid">
+        <div class="mcat"><div class="h ml">Aromatics</div><div class="d">Garlic, onion, shallot, ginger, scallions.</div></div>
+        <div class="mcat"><div class="h ml">Fats &amp; acids</div><div class="d">Olive oil, a neutral oil, butter · lemons, limes, a vinegar.</div></div>
+        <div class="mcat"><div class="h ml">Umami</div><div class="d">Soy, fish sauce, anchovy, canned tomato &amp; paste, Parmesan.</div></div>
+        <div class="mcat"><div class="h ml">Heat</div><div class="d">Dried chilies, chili crisp, a fresh chili.</div></div>
+        <div class="mcat"><div class="h ml">Grains &amp; legumes</div><div class="d">Rice, lentils, chickpeas, white &amp; black beans — the fiber backbone.</div></div>
+        <div class="mcat"><div class="h ml">Weekly herbs</div><div class="d">Cilantro, parsley, mint, dill, basil — they cross every cuisine.</div></div>
+      </div>
+      <p class="foot"><b>Make a batch, use it all week.</b> A few make-ahead bits each cross several dishes:<br>
+      · <b>Quick-pickled red onion</b> → carnitas, barbacoa, camarones; good on any bowl.<br>
+      · <b>Herb-yogurt / tzatziki</b> → Greek chicken &amp; gyro; the green goddess bowl.<br>
+      · <b>Tahini-lemon sauce</b> → Levantine shrimp &amp; chicken; Fresh Bowls; Greek.<br>
+      · <b>Pickled carrot &amp; daikon</b> → banh mi bowl, tacos, gochujang bowl.<br>
+      · <b>A pot of grains</b> (rice, farro, lentils) → every bowl, plus Levantine, French, Spanish.</div>
+    </div>
+  </section>
+
   <section id="pantries">
-    <div class="sec-head"><span class="sec-num">IV</span><h2>Cuisine Pantries</h2></div>
+    <div class="sec-head"><span class="sec-num">V</span><h2>Cuisine Pantries</h2></div>
     <p class="sec-sub">Each cuisine is a small set of high-impact ingredients. Buy shelf-stable items occasionally; refresh herbs and produce weekly. <b>Tap an item to mark it stocked</b> — what stays unchecked is the shopping list. Saved on this device.</p>
     <div id="pantryMount"></div>
   </section>
 
   <section id="matrix">
-    <div class="sec-head"><span class="sec-num">V</span><h2>The Matrix</h2></div>
+    <div class="sec-head"><span class="sec-num">VI</span><h2>The Matrix</h2></div>
     <p class="sec-sub">The whole system on one grid — which base becomes which dish, in every cuisine.</p>
     <details class="matrix">
       <summary>Base × Cuisine <span class="hint">tap to open · scrolls sideways</span></summary>
@@ -263,7 +285,7 @@
   </section>
 
   <section id="market">
-    <div class="sec-head"><span class="sec-num">VI</span><h2>The Weekly Market Run</h2></div>
+    <div class="sec-head"><span class="sec-num">VII</span><h2>The Weekly Market Run</h2></div>
     <p class="sec-sub">The bases and pantries are done. Weekly, refresh produce, herbs, greens, and a tin or two of beans.</p>
     <div class="market">
       <p class="lead">Shop brightness, not recipes.</p>
@@ -281,7 +303,7 @@
 
 <footer>
   <div class="fr"></div>
-  <p class="sm">Five bases · Eight cuisines · Twenty-four dishes</p>
+  <p class="sm">Five bases · Nine cuisines · Twenty-nine dishes</p>
 </footer>
 
 <button id="top" aria-label="Back to top">↑</button>
@@ -325,6 +347,35 @@
 
   // protein (p) and fiber (f) are approximate grams per serving
   const CUISINES = [
+    { key:"freshbowls", name:"Fresh Bowls", desc:"grain bowls, herbs, crunch, bright sauces",
+      pantry:["Quinoa","farro","brown rice","edamame","avocado","cucumber","radish","kimchi","gochujang","rice vinegar","tahini","Greek yogurt","cilantro","mint","basil","dill","scallions","ginger","toasted sesame seeds & oil","nori","sriracha","limes","carrots & daikon","sugar snap peas"],
+      dishes:[
+        {name:"Green goddess chicken bowl", base:"chicken", p:34, f:12, steps:[
+          "Blend a green goddess sauce: Greek yogurt, a big handful of herbs (basil, parsley, dill), garlic, lemon, and olive oil.",
+          "Warm thawed chicken; spoon over cooked farro or quinoa with cucumber, avocado, and sugar snap peas.",
+          "Pile on greens, drizzle the sauce generously, finish with lemon and black pepper."],
+          greens:"Built on greens — baby kale or arugula under everything; herbs by the handful."},
+        {name:"Gochujang beef rice bowl", base:"chuck", p:33, f:9, steps:[
+          "Glaze thawed shredded chuck in gochujang, soy, sesame oil, garlic, and a little honey; warm through.",
+          "Build over brown rice with kimchi, quick-pickled cucumber, and wilted spinach.",
+          "Sesame seeds and scallion; a fried egg if you want one."],
+          greens:"Wilt spinach into the warm rice; kimchi and cucumber for crunch."},
+        {name:"Ginger-scallion pork bowl", base:"ground", p:30, f:11, steps:[
+          "Crisp thawed ground pork; toss off the heat with a raw ginger, scallion, soy, and sesame sauce.",
+          "Spoon over brown rice with edamame and quick-pickled cucumber and carrot.",
+          "Sesame, more scallion, and a dab of chili crisp."],
+          greens:"Edamame and a fist of scallion; quick-pickled cucumber and carrot."},
+        {name:"Shrimp poke-style bowl", base:"shrimp", p:30, f:10, steps:[
+          "Toss seared (or chilled cooked) shrimp with soy, sesame oil, rice vinegar, and a little lime.",
+          "Build over rice with edamame, cucumber, avocado, shredded carrot, and torn nori.",
+          "Sesame seeds, scallion, and sriracha-mayo or extra soy-lime."],
+          greens:"Edamame, cucumber, avocado, shredded carrot — keep it vegetable-heavy."},
+        {name:"Banh mi pork bowl", base:"pork", p:30, f:8, steps:[
+          "Crisp thawed pork; glaze with a little soy, lime, and sugar (or hoisin).",
+          "Build over rice or rice vermicelli with pickled carrot-daikon, cucumber, and jalapeño.",
+          "A big handful of cilantro and mint; sriracha-lime mayo or nuoc cham to finish."],
+          greens:"Pickled carrot-daikon, cucumber, and a big handful of cilantro and mint."}
+      ]},
     { key:"szechuan", name:"Szechuan", desc:"bold, numbing, layered",
       pantry:["Sichuan peppercorns","Pixian doubanjiang","Chinkiang black vinegar","light & dark soy","Shaoxing wine","chili crisp","dried Tianjin chilies","toasted sesame oil","fermented black beans","ginger","garlic","scallions","white pepper","cornstarch","peanuts","jasmine rice","fresh chilies","cilantro","bok choy"],
       dishes:[
